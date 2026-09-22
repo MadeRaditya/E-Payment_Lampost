@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('invoice_id')->constrained('invoices')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('payment_gateway');
+            $table->string('reference_id')->unique()->nullable();
+            $table->string('payment_method')->nullable();
+            $table->decimal('amount', 15, 2);
+            $table->enum('status', ['pending', 'success', 'failed', 'expired'])->default('pending');
+            $table->timestamp('paid_at')->nullable();
+            $table->json('gateway_response')->nullable();
             $table->timestamps();
         });
     }

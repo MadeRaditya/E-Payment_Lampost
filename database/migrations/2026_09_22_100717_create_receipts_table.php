@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('payment_id')->constrained('payments')->onDelete('cascade');
+            $table->string('receipt_number')->unique();
+            $table->string('file_path');
             $table->timestamps();
         });
     }
