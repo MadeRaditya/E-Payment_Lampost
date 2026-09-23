@@ -16,18 +16,8 @@ class UserSeeder extends Seeder
     {
         User::create([
             'name' => 'Admin Keuangan',
-            'email' => 'finance@example.com',
+            'email' => 'admin@example.com',
             'password' => Hash::make('password'),
-            'role' => 'finance',
-            'identity_number' => 'FIN-001',
-        ]);
-
-        User::create([
-            'name' => 'Budi',
-            'email' => 'budi@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'payer',
-            'identity_number' => '12345678',
         ]);
     }
 }

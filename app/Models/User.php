@@ -14,7 +14,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'identity_number',
+        'name', 'email', 'password',
     ];
 
     protected $hidden = [
@@ -32,20 +32,5 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function createdInvoices()
-    {
-        return $this->hasMany(Invoice::class, 'created_by');
-    }
-
-    public function invoices()
-    {
-        return $this->hasMany(Invoice::class, 'payer_id');
-    }
-
-    public function payments()
-    {
-        return $this->hasMany(Payment::class);
     }
 }

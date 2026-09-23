@@ -22,12 +22,8 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
-
-            if (Auth::user()->role === 'finance') {
-                return redirect()->intended('/finance/dashboard');
-            }
-
-            return redirect()->intended('/payer/dashboard');
+            
+            return redirect()->intended('/dashboard');
         }
 
         return back()->withErrors([

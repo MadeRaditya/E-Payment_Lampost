@@ -14,15 +14,13 @@ class InvoiceSeeder extends Seeder
      */
     public function run(): void
     {
-        $finance = User::where('role', 'finance')->first();
-        $payer = User::where('role', 'payer')->first();
+        $admin = User::first();
 
         Invoice::create([
             'invoice_number' => 'INV-2026-0001',
-            'payer_id' => $payer->id,
-            'created_by' => $finance->id,
+            'created_by' => $admin->id,
             'amount' => 150000,
-            'description' => 'Pembayaran Tagihan bulanan',
+            'description' => 'Pembayaran UKT Semester Ganjil',
             'status' => 'unpaid',
             'due_date' => now()->addDays(7),
         ]);

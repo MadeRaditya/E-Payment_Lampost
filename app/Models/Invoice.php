@@ -10,7 +10,7 @@ class Invoice extends Model
     use HasFactory;
 
     protected $fillable = [
-        'invoice_number', 'payer_id', 'created_by', 'amount',
+        'invoice_number', 'created_by', 'amount',
         'description', 'status', 'due_date',
     ];
 
@@ -18,11 +18,6 @@ class Invoice extends Model
         'due_date' => 'date',
         'amount' => 'decimal:2',
     ];
-
-    public function payer()
-    {
-        return $this->belongsTo(User::class, 'payer_id');
-    }
 
     public function creator()
     {
