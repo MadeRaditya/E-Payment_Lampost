@@ -10,12 +10,22 @@ class Invoice extends Model
     use HasFactory;
 
     protected $fillable = [
-        'invoice_number', 'created_by', 'amount',
-        'description', 'status', 'due_date',
+        'invoice_number',
+        'created_by',
+        'amount',
+        'description',
+        'advertiser_name',
+        'advertiser_contact',
+        'ad_slot',
+        'ad_duration_days',
+        'ad_start_date',
+        'status',
+        'due_date',
     ];
 
     protected $casts = [
         'due_date' => 'date',
+        'ad_start_date' => 'date',
         'amount' => 'decimal:2',
     ];
 
