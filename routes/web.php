@@ -34,9 +34,19 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
+
     Route::resource('invoices', InvoiceController::class);
-    
+
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('payments.show');
 });
+
+// receipt route
+    Route::get('/receipt/{payment}/download', [App\Http\Controllers\ReceiptController::class, 'downloadByPayment'])
+        ->name('receipt.download');
+
+    Route::get('/receipt/{payment}/preview', [App\Http\Controllers\ReceiptController::class, 'preview'])
+        ->name('receipt.preview');
+
+    Route::get('/receipt/verify/{receipt_number}', [App\Http\Controllers\ReceiptController::class, 'downloadByReceiptNumber'])
+        ->name('receipt.verify');

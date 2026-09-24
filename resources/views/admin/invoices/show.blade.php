@@ -59,19 +59,27 @@
             </div>
             <div class="divide-y divide-gray-50">
                 @forelse($invoice->payments as $payment)
-                <div class="p-4 flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium">{{ $payment->payment_method ?? 'Belum dipilih' }}</p>
-                        <p class="text-xs text-gray-500">{{ $payment->created_at->format('d M Y, H:i') }}</p>
+                    <div class="p-4 flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium">{{ $payment->payment_method ?? 'Belum dipilih' }}</p>
+                            <p class="text-xs text-gray-500">{{ $payment->created_at->format('d M Y, H:i') }}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full
+                                {{ $payment->status === 'success' ? 'bg-green-100 text-green-700' : 
+                                ($payment->status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700') }}">
+                                {{ ucfirst($payment->status) }}
+                            </span>
+                            @if($payment->status === 'success')
+                                <a href="{{ route('receipt.download', $payment->id) }}" 
+                                class="text-xs text-red-600 hover:underline font-medium">
+                                    Kuitansi
+                                </a>
+                            @endif
+                        </div>
                     </div>
-                    <span class="px-2 py-1 text-xs font-semibold rounded-full
-                        {{ $payment->status === 'success' ? 'bg-green-100 text-green-700' : 
-                           ($payment->status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700') }}">
-                        {{ ucfirst($payment->status) }}
-                    </span>
-                </div>
                 @empty
-                <div class="p-8 text-center text-gray-400 text-sm">Belum ada percobaan pembayaran</div>
+                    <div class="p-8 text-center text-gray-400 text-sm">Belum ada percobaan pembayaran</div>
                 @endforelse
             </div>
         </div>
