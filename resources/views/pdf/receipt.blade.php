@@ -247,20 +247,20 @@
                 <table>
                     <tr>
                         <td style="width: 50px;">
-                            <div class="logo-box">A</div>
+                            <div class="logo-box">LP</div>
                         </td>
                         <td>
-                            <div class="brand-name">{{ $company['name'] }}</div>
-                            <div class="brand-tagline">Sistem Pembayaran Iklan Digital</div>
+                            <div class="brand-name">PT LAMPUNG POST</div>
+                            <div class="brand-tagline">Sistem Pembayaran Digital Resmi (E-Payment)</div>
                         </td>
                     </tr>
                 </table>
             </td>
             <td class="company-info" style="width: 40%;">
-                {{ $company['address'] }}<br>
-                Telp: {{ $company['phone'] }}<br>
-                Email: {{ $company['email'] }}<br>
-                {{ $company['website'] }}
+                Jl. Soekarno Hatta No. 108, Rajabasa, Bandar Lampung<br>
+                Telp: (0721) 783693 / 783694<br>
+                Email: keuangan@lampungpost.co.id<br>
+                www.lampungpost.co.id
             </td>
         </tr>
     </table>
