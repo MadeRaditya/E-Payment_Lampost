@@ -102,6 +102,57 @@
                         <p class="text-sm text-slate-800 leading-relaxed">{{ $invoice->description }}</p>
                     </div>
                 </div>
+
+                <!-- Itemized Cost Table -->
+                <div class="border-t border-slate-100 pt-6">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Tabel Pembiayaan (Standar Faktur)</h4>
+                    <div class="overflow-x-auto rounded-xl border border-slate-200">
+                        <table class="w-full text-xs text-left">
+                            <thead class="bg-slate-100/80 text-slate-700 font-bold uppercase text-[10px]">
+                                <tr>
+                                    <th class="py-2.5 px-3 w-10 text-center">No</th>
+                                    <th class="py-2.5 px-3">Item Layanan</th>
+                                    <th class="py-2.5 px-3 text-center">Durasi</th>
+                                    <th class="py-2.5 px-3 text-center">Qty</th>
+                                    <th class="py-2.5 px-3 text-right">Tarif (IDR)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-slate-700">
+                                <tr>
+                                    <td class="py-3 px-3 text-center font-bold text-slate-400">1</td>
+                                    <td class="py-3 px-3 font-semibold text-slate-900">
+                                        Slot Iklan: {{ $invoice->ad_slot }}
+                                    </td>
+                                    <td class="py-3 px-3 text-center">{{ $invoice->ad_duration_days }} Hari</td>
+                                    <td class="py-3 px-3 text-center">1 Paket</td>
+                                    <td class="py-3 px-3 text-right font-bold text-slate-900">
+                                        Rp {{ number_format($invoice->amount, 0, ',', '.') }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="bg-slate-50/70 border-t border-slate-200 font-semibold">
+                                <tr>
+                                    <td colspan="4" class="py-2 px-3 text-right text-slate-500">Subtotal:</td>
+                                    <td class="py-2 px-3 text-right font-bold text-slate-900">Rp {{ number_format($invoice->amount, 0, ',', '.') }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="py-2 px-3 text-right text-slate-500">PPN (Pajak Pertambahan Nilai):</td>
+                                    <td class="py-2 px-3 text-right font-bold text-slate-900">Termasuk (Rp 0)</td>
+                                </tr>
+                                <tr class="bg-red-50/80 text-red-900 font-bold text-sm">
+                                    <td colspan="4" class="py-3 px-3 text-right uppercase tracking-wider">Total Tagihan:</td>
+                                    <td class="py-3 px-3 text-right text-red-700 font-black">Rp {{ number_format($invoice->amount, 0, ',', '.') }}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <!-- Terbilang -->
+                    <div class="mt-3 p-3 bg-slate-50 rounded-xl border border-dashed border-slate-200 text-xs text-slate-600 italic">
+                        <span class="font-bold text-slate-900 not-italic">Terbilang:</span> 
+                        {{ \App\Support\Terbilang::rupiah($invoice->amount) }}
+                    </div>
+                </div>
             </div>
 
             <!-- Riwayat Pembayaran (Payment Attempts from Gateway) -->
@@ -190,6 +241,32 @@
                        class="w-full border border-slate-200 hover:bg-slate-100 text-slate-700 font-semibold py-2.5 rounded-xl text-xs transition text-center flex items-center justify-center gap-1">
                         <span>Buka Halaman</span>
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Invoice PDF & Print Actions Card -->
+            <div class="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-xs space-y-3">
+                <div class="flex items-center gap-2 mb-1">
+                    <div class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm text-slate-900">Dokumen Faktur Tagihan</h4>
+                        <p class="text-[11px] text-slate-400">Format Resmi Standar Komersial</p>
+                    </div>
+                </div>
+
+                <div class="space-y-2 pt-1">
+                    <a href="{{ route('invoices.download', $invoice->id) }}" 
+                       class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-xs">
+                        <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        <span>Unduh PDF Faktur</span>
+                    </a>
+                    <a href="{{ route('invoices.print', $invoice->id) }}" target="_blank"
+                       class="w-full border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold py-2 px-4 rounded-xl text-xs transition flex items-center justify-center gap-2">
+                        <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                        <span>Pratinjau / Cetak Faktur</span>
                     </a>
                 </div>
             </div>

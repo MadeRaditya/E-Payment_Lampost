@@ -60,13 +60,13 @@ class ReceiptController extends Controller
             'receipt' => $receipt,
             'payment' => $payment,
             'invoice' => $invoice,
-            'company' => [
-                'name' => config('app.name', 'AdPay'),
-                'address' => 'Jl. Contoh Alamat No. 123, Jakarta',
-                'phone' => '(021) 1234-5678',
-                'email' => 'finance@company.com',
-                'website' => 'www.company.com',
-            ],
+            'company' => config('company', [
+                'name' => 'PT LAMPUNG POST',
+                'address' => 'Jl. Soekarno Hatta No. 108, Rajabasa, Bandar Lampung 35144',
+                'phone' => '(0721) 783693 / 783694',
+                'email' => 'keuangan@lampungpost.co.id',
+                'website' => 'www.lampungpost.co.id',
+            ]),
             'verification_url' => route('receipt.verify', $receipt->receipt_number),
         ];
 

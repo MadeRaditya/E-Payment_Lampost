@@ -107,4 +107,57 @@ class InvoiceController extends Controller
         return redirect()->route('invoices.index')
             ->with('success', 'Tagihan berhasil dihapus.');
     }
+
+    public function downloadPdf(Invoice $invoice)
+    {
+        $invoice->load('creator', 'payments');
+        return $this->buildPdf($invoice)->download('Invoice-' . $invoice->invoice_number . '.pdf');
+    }
+
+    public function print(Invoice $invoice)
+    {
+        $invoice->load('creator', 'payments');
+        return $this->buildPdf($invoice)->stream('Invoice-' . $invoice->invoice_number . '.pdf');
+    }
+
+    public function buildPdf(Invoice $invoice)
+    {
+        $invoice->loadMissing('creator', 'payments');
+
+        $data = [
+            'invoice' => $invoice,
+            'company' => config('company', [
+                'name' => 'PT LAMPUNG POST',
+                'legal_name' => 'PT Masa Kini Mandiri (Lampung Post Media Group)',
+                'address' => 'Jl. Soekarno Hatta No. 108, Rajabasa, Bandar Lampung 35144',
+                'npwp' => '01.325.882.1-322.000',
+                'phone' => '(0721) 783693 / 783694',
+                'email' => 'keuangan@lampungpost.co.id',
+                'website' => 'www.lampungpost.co.id',
+                'bank_accounts' => [
+                    [
+                        'bank' => 'Bank Central Asia (BCA)',
+                        'account_number' => '023-8899-777',
+                        'account_name' => 'PT LAMPUNG POST',
+                    ],
+                    [
+                        'bank' => 'Bank Mandiri',
+                        'account_number' => '114-00-998877-6',
+                        'account_name' => 'PT LAMPUNG POST',
+                    ],
+                ],
+            ]),
+            'payment_url' => route('public.pay.show', $invoice->invoice_number),
+        ];
+
+        $html = view('pdf.invoice', $data)->render();
+
+        return \Barryvdh\DomPDF\Facade\Pdf::loadHTML($html)
+            ->setPaper('a4', 'portrait')
+            ->setOption([
+                'isRemoteEnabled' => false,
+                'isHtml5ParserEnabled' => true,
+                'defaultFont' => 'DejaVu Sans',
+            ]);
+    }
 }

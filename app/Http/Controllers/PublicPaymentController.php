@@ -99,4 +99,18 @@ class PublicPaymentController extends Controller
             return back()->with('error', 'Terjadi kesalahan saat menghubungi Payment Gateway: ' . $e->getMessage());
         }
     }
+
+    public function downloadInvoice($invoice_number)
+    {
+        $invoice = Invoice::where('invoice_number', $invoice_number)->firstOrFail();
+        $invoice->load('creator', 'payments');
+        return app(InvoiceController::class)->buildPdf($invoice)->download('Invoice-' . $invoice->invoice_number . '.pdf');
+    }
+
+    public function printInvoice($invoice_number)
+    {
+        $invoice = Invoice::where('invoice_number', $invoice_number)->firstOrFail();
+        $invoice->load('creator', 'payments');
+        return app(InvoiceController::class)->buildPdf($invoice)->stream('Invoice-' . $invoice->invoice_number . '.pdf');
+    }
 }
