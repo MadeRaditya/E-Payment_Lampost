@@ -24,7 +24,7 @@
 
                 <!-- Main Heading -->
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-                    Pembayaran Iklan & Layanan <br class="hidden sm:inline">
+                    Pesan Iklan & Bayar Tagihan <br class="hidden sm:inline">
                     <span class="bg-gradient-to-r from-red-600 via-red-600 to-red-800 bg-clip-text text-transparent">
                         Lebih Cepat, Otomatis, & Sah.
                     </span>
@@ -32,11 +32,31 @@
 
                 <!-- Subtitle -->
                 <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                    Selesaikan tagihan iklan koran, media digital, advertorial, dan kerja sama kemitraan Lampung Post tanpa perlu kirim bukti transfer WhatsApp. Terverifikasi instan 24/7 dengan kuitansi PDF resmi.
+                    Pesan slot iklan koran & media digital Lampung Post secara mandiri, atau selesaikan tagihan iklan Anda tanpa perlu kirim bukti transfer WhatsApp. Terverifikasi instan 24/7 dengan kuitansi PDF resmi.
                 </p>
 
-                <!-- Quick Check Form Bar -->
+                <!-- Dual CTA Buttons -->
                 <div class="pt-2 max-w-xl mx-auto lg:mx-0">
+                    <!-- Primary CTAs -->
+                    <div class="flex flex-col sm:flex-row gap-3 mb-4">
+                        <a href="{{ route('booking.step1') }}" 
+                           class="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold px-6 py-3.5 rounded-2xl shadow-xl shadow-red-600/30 transition-all active:scale-95 text-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            <span>Pesan Iklan Baru</span>
+                        </a>
+                        <a href="#pricing" 
+                           class="flex-1 inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-semibold px-6 py-3.5 rounded-2xl transition-all text-sm shadow-sm">
+                            <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                            <span>Lihat Tarif Iklan</span>
+                        </a>
+                    </div>
+
+                    <!-- Divider Label -->
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest text-center lg:text-left mb-2">
+                        Sudah punya tagihan dari tim kami?
+                    </p>
+
+                    <!-- Quick Check Form Bar -->
                     <form action="{{ route('public.pay.check') }}" method="POST" 
                           class="p-2 sm:p-2.5 bg-white rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200/80 flex flex-col sm:flex-row gap-2 transition hover:border-red-300">
                         @csrf
@@ -48,7 +68,7 @@
                                    class="w-full pl-11 pr-4 py-3 text-sm bg-transparent outline-none font-mono text-slate-800 placeholder:font-sans placeholder:text-slate-400 uppercase tracking-wider">
                         </div>
                         <button type="submit" 
-                                class="bg-red-600 hover:bg-red-700 active:scale-95 text-white font-semibold text-sm px-6 py-3.5 rounded-xl shadow-md shadow-red-600/20 transition-all flex items-center justify-center gap-2">
+                                class="bg-slate-900 hover:bg-slate-800 active:scale-95 text-white font-semibold text-sm px-6 py-3.5 rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
                             <span>Cek Tagihan</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </button>
@@ -78,7 +98,6 @@
 
             <!-- Right Hero Visual Card -->
             <div class="lg:col-span-5 relative">
-                <!-- Floating Decorative Elements -->
                 <div class="relative mx-auto max-w-md">
                     <!-- Glassmorphism Card Simulation -->
                     <div class="bg-gradient-to-b from-slate-900 to-slate-950 p-6 sm:p-7 rounded-3xl shadow-2xl text-white border border-slate-800 relative z-10">
@@ -138,10 +157,16 @@
                         </div>
 
                         <!-- Card Footer CTA -->
-                        <div class="pt-2">
-                            <a href="{{ route('public.pay.form') }}" class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 text-sm shadow-lg shadow-red-600/30 transition">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                                <span>Bayar Sekarang via Midtrans</span>
+                        <div class="pt-2 space-y-2">
+                            <a href="{{ route('booking.step1') }}" 
+                               class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 text-sm shadow-lg shadow-red-600/30 transition active:scale-95">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                <span>Pesan Slot Iklan</span>
+                            </a>
+                            <a href="{{ route('public.pay.form') }}" 
+                               class="w-full bg-slate-800/60 hover:bg-slate-800 text-slate-200 font-semibold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-xs border border-slate-700 transition">
+                                <svg class="w-3.5 h-3.5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                <span>Bayar Tagihan yang Sudah Ada</span>
                             </a>
                         </div>
                     </div>
@@ -213,7 +238,7 @@
                 </div>
                 <h3 class="text-base font-bold text-slate-900 mb-2">Tanpa Perlu Login</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                    Pelanggan dan mitra cukup memasukkan nomor ID Tagihan yang diberikan tim kami tanpa repot mengingat password.
+                    Pesan iklan atau bayar tagihan tanpa perlu mendaftar akun. Cukup akses langsung dari browser Anda.
                 </p>
             </div>
         </div>
@@ -264,8 +289,9 @@
                     </ul>
                 </div>
 
-                <a href="mailto:iklan@lampungpost.co.id?subject=Pemesanan%20Iklan%20Sidebar" 
-                   class="w-full text-center py-3 px-4 rounded-xl border border-slate-200 hover:border-red-600 hover:text-red-600 font-semibold text-sm transition">
+                <a href="{{ route('booking.step1', ['format' => 'kolom']) }}" 
+                   class="w-full text-center py-3 px-4 rounded-xl border border-slate-200 hover:border-red-600 hover:text-red-600 hover:bg-red-50/40 font-semibold text-sm transition inline-flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                     Pesan Slot Ini
                 </a>
             </div>
@@ -311,8 +337,9 @@
                     </ul>
                 </div>
 
-                <a href="mailto:iklan@lampungpost.co.id?subject=Pemesanan%20Header%20Banner%20Premium" 
-                   class="w-full text-center py-3.5 px-4 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold text-sm shadow-lg shadow-red-600/30 transition">
+                <a href="{{ route('booking.step1', ['format' => 'display_banner']) }}" 
+                   class="w-full text-center py-3.5 px-4 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold text-sm shadow-lg shadow-red-600/30 transition inline-flex items-center justify-center gap-2 active:scale-95">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                     Pesan Slot Premium
                 </a>
             </div>
@@ -350,12 +377,23 @@
                     </ul>
                 </div>
 
-                <a href="mailto:iklan@lampungpost.co.id?subject=Pemesanan%20In-Article%20Banner" 
-                   class="w-full text-center py-3 px-4 rounded-xl border border-slate-200 hover:border-red-600 hover:text-red-600 font-semibold text-sm transition">
+                <a href="{{ route('booking.step1', ['format' => 'advertorial']) }}" 
+                   class="w-full text-center py-3 px-4 rounded-xl border border-slate-200 hover:border-red-600 hover:text-red-600 hover:bg-red-50/40 font-semibold text-sm transition inline-flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                     Pesan Slot Ini
                 </a>
             </div>
 
+        </div>
+
+        <!-- Additional CTA Below Pricing -->
+        <div class="mt-12 text-center">
+            <p class="text-sm text-slate-500 mb-4">Tidak menemukan slot yang sesuai kebutuhan Anda?</p>
+            <a href="{{ route('booking.step1') }}" 
+               class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold px-8 py-3.5 rounded-2xl shadow-lg transition-all active:scale-95 text-sm">
+                <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                <span>Konsultasi & Pesan Custom Slot</span>
+            </a>
         </div>
     </div>
 </section>
@@ -365,82 +403,135 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-16">
             <span class="text-xs font-bold uppercase tracking-widest text-red-600">Alur Mudah</span>
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">Cara Pembayaran 4 Langkah</h2>
-            <p class="text-slate-600 text-sm mt-3">Proses cepat dan transparan tanpa proses konfirmasi manual melalui pesan teks.</p>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">2 Cara Menggunakan Portal Ini</h2>
+            <p class="text-slate-600 text-sm mt-3">Pilih alur sesuai kebutuhan Anda: pesan iklan baru, atau bayar tagihan yang sudah diterbitkan.</p>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 relative">
-            
-            <!-- Step 1 -->
-            <div class="relative bg-slate-50 p-6 rounded-2xl border border-slate-200/70">
-                <span class="w-10 h-10 rounded-xl bg-red-600 text-white font-extrabold flex items-center justify-center text-sm shadow-md shadow-red-600/20 mb-4">
-                    01
-                </span>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Terima ID Tagihan</h3>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    Admin keuangan kami menerbitkan tagihan resmi dengan format ID unik seperti <code class="font-mono bg-slate-200 px-1 py-0.5 rounded text-red-700 font-semibold">INV-2026...</code>
+        <!-- Two Track Layout -->
+        <div class="grid lg:grid-cols-2 gap-10">
+            <!-- Track A: Pesan Iklan Baru -->
+            <div class="bg-gradient-to-br from-red-50 to-slate-50 rounded-3xl p-8 border border-red-100">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600 text-white text-xs font-bold uppercase tracking-wider mb-4">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    Alur A — Pesan Iklan Baru
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900 mb-6">Belum Punya ID Tagihan?</h3>
+                <p class="text-sm text-slate-600 mb-8 leading-relaxed">
+                    Isi form pemesanan 4 langkah, unggah materi iklan, dan bayar langsung via QRIS / Virtual Account. Tagihan otomatis terbit.
                 </p>
+
+                <ol class="space-y-4">
+                    <li class="flex gap-4">
+                        <span class="w-8 h-8 rounded-xl bg-red-600 text-white font-extrabold flex items-center justify-center text-xs flex-shrink-0">1</span>
+                        <div>
+                            <p class="font-bold text-sm text-slate-900">Pilih Kategori & Format Iklan</p>
+                            <p class="text-xs text-slate-500 mt-0.5">Properti, Otomotif, Karir, atau lainnya.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="w-8 h-8 rounded-xl bg-red-600 text-white font-extrabold flex items-center justify-center text-xs flex-shrink-0">2</span>
+                        <div>
+                            <p class="font-bold text-sm text-slate-900">Isi Teks & Jadwal Tayang</p>
+                            <p class="text-xs text-slate-500 mt-0.5">Harga otomatis terhitung real-time.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="w-8 h-8 rounded-xl bg-red-600 text-white font-extrabold flex items-center justify-center text-xs flex-shrink-0">3</span>
+                        <div>
+                            <p class="font-bold text-sm text-slate-900">Unggah Media (Opsional)</p>
+                            <p class="text-xs text-slate-500 mt-0.5">Foto atau PDF pendukung iklan Anda.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="w-8 h-8 rounded-xl bg-red-600 text-white font-extrabold flex items-center justify-center text-xs flex-shrink-0">4</span>
+                        <div>
+                            <p class="font-bold text-sm text-slate-900">Isi Data & Bayar</p>
+                            <p class="text-xs text-slate-500 mt-0.5">Langsung ke Payment Gateway, kuitansi otomatis terbit.</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <a href="{{ route('booking.step1') }}" 
+                   class="mt-8 w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg shadow-red-600/30 transition-all active:scale-95 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    Mulai Pesan Iklan
+                </a>
             </div>
 
-            <!-- Step 2 -->
-            <div class="relative bg-slate-50 p-6 rounded-2xl border border-slate-200/70">
-                <span class="w-10 h-10 rounded-xl bg-red-600 text-white font-extrabold flex items-center justify-center text-sm shadow-md shadow-red-600/20 mb-4">
-                    02
-                </span>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Periksa Detail</h3>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    Buka halaman bayar, masukkan ID tagihan, lalu tinjau nama pengiklan, rincian slot, dan total tagihan sebelum membayar.
+            <!-- Track B: Bayar Tagihan -->
+            <div class="bg-slate-50 rounded-3xl p-8 border border-slate-200">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-white text-xs font-bold uppercase tracking-wider mb-4">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    Alur B — Bayar Tagihan
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900 mb-6">Sudah Punya ID Tagihan?</h3>
+                <p class="text-sm text-slate-600 mb-8 leading-relaxed">
+                    Cukup masukkan ID tagihan yang dikirim oleh tim keuangan Lampung Post. Tidak perlu login atau daftar akun.
                 </p>
-            </div>
 
-            <!-- Step 3 -->
-            <div class="relative bg-slate-50 p-6 rounded-2xl border border-slate-200/70">
-                <span class="w-10 h-10 rounded-xl bg-red-600 text-white font-extrabold flex items-center justify-center text-sm shadow-md shadow-red-600/20 mb-4">
-                    03
-                </span>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Selesaikan Bayar</h3>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    Pilih kanal pembayaran favorit Anda via Midtrans Snap (QRIS, BCA VA, Mandiri, BRI, BNI, GoPay, atau ShopeePay).
-                </p>
-            </div>
+                <ol class="space-y-4">
+                    <li class="flex gap-4">
+                        <span class="w-8 h-8 rounded-xl bg-slate-900 text-white font-extrabold flex items-center justify-center text-xs flex-shrink-0">1</span>
+                        <div>
+                            <p class="font-bold text-sm text-slate-900">Terima ID Tagihan dari Tim Kami</p>
+                            <p class="text-xs text-slate-500 mt-0.5">Format: <code class="font-mono bg-slate-200 px-1 py-0.5 rounded text-red-700 font-semibold">INV-2026...</code></p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="w-8 h-8 rounded-xl bg-slate-900 text-white font-extrabold flex items-center justify-center text-xs flex-shrink-0">2</span>
+                        <div>
+                            <p class="font-bold text-sm text-slate-900">Periksa Detail Tagihan</p>
+                            <p class="text-xs text-slate-500 mt-0.5">Pastikan nama, nominal, dan jatuh tempo benar.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="w-8 h-8 rounded-xl bg-slate-900 text-white font-extrabold flex items-center justify-center text-xs flex-shrink-0">3</span>
+                        <div>
+                            <p class="font-bold text-sm text-slate-900">Pilih Kanal Pembayaran</p>
+                            <p class="text-xs text-slate-500 mt-0.5">QRIS, Virtual Account, atau e-Wallet via Midtrans.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="w-8 h-8 rounded-xl bg-slate-900 text-white font-extrabold flex items-center justify-center text-xs flex-shrink-0">4</span>
+                        <div>
+                            <p class="font-bold text-sm text-slate-900">Kuitansi PDF Otomatis Terbit</p>
+                            <p class="text-xs text-slate-500 mt-0.5">Setelah pembayaran diverifikasi real-time.</p>
+                        </div>
+                    </li>
+                </ol>
 
-            <!-- Step 4 -->
-            <div class="relative bg-slate-50 p-6 rounded-2xl border border-slate-200/70">
-                <span class="w-10 h-10 rounded-xl bg-red-600 text-white font-extrabold flex items-center justify-center text-sm shadow-md shadow-red-600/20 mb-4">
-                    04
-                </span>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Unduh Kuitansi PDF</h3>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    Sistem mendeteksi transaksi secara real-time dan langsung menerbitkan Kuitansi PDF sah berstempel digital.
-                </p>
+                <a href="{{ route('public.pay.form') }}" 
+                   class="mt-8 w-full inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg transition-all active:scale-95 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                    Masukkan ID Tagihan
+                </a>
             </div>
-
         </div>
     </div>
 </section>
 
 <!-- Direct Action Call to Action Banner -->
 <section class="py-16 bg-gradient-to-br from-red-600 via-red-700 to-red-900 text-white relative overflow-hidden">
-    <!-- Ambient circle background -->
     <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
 
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <h2 class="text-3xl sm:text-4xl font-extrabold mb-4 tracking-tight">
-            Sudah Memiliki ID Tagihan dari Tim Lampung Post?
+            Siap Memulai? Pilih Alur Anda.
         </h2>
         <p class="text-red-100 text-base max-w-2xl mx-auto mb-8 leading-relaxed">
-            Selesaikan kewajiban pembayaran iklan Anda sekarang juga untuk memastikan slot tayang tepat waktu tanpa kendala verifikasi manual.
+            Pesan slot iklan baru secara mandiri, atau selesaikan kewajiban pembayaran iklan Anda untuk memastikan slot tayang tepat waktu.
         </p>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="{{ route('public.pay.form') }}" 
+            <a href="{{ route('booking.step1') }}" 
                class="bg-white hover:bg-slate-100 text-red-700 font-bold px-8 py-3.5 rounded-xl shadow-xl transition-all active:scale-95 text-sm flex items-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                <span>Buka Formulir Pembayaran</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                <span>Pesan Iklan Baru</span>
             </a>
-            <a href="mailto:keuangan@lampungpost.co.id" 
-               class="bg-red-800/60 hover:bg-red-800 text-white font-semibold px-6 py-3.5 rounded-xl border border-red-400/40 transition text-sm">
-                Hubungi Bagian Keuangan
+            <a href="{{ route('public.pay.form') }}" 
+               class="bg-red-800/60 hover:bg-red-800 text-white font-semibold px-6 py-3.5 rounded-xl border border-red-400/40 transition text-sm flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                <span>Bayar Tagihan</span>
             </a>
         </div>
     </div>
@@ -458,17 +549,30 @@
             <!-- Question 1 -->
             <details class="group bg-white rounded-2xl border border-slate-200/80 p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer shadow-xs transition hover:border-slate-300">
                 <summary class="flex items-center justify-between font-bold text-slate-900 text-sm">
-                    <span>Apakah saya harus mendaftar akun terlebih dahulu untuk membayar tagihan?</span>
+                    <span>Apakah saya harus mendaftar akun terlebih dahulu untuk memesan iklan atau membayar tagihan?</span>
                     <span class="transition group-open:rotate-180 text-slate-400 group-hover:text-red-600">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </span>
                 </summary>
                 <p class="mt-3 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
-                    Tidak perlu. Pelanggan dan pengiklan dapat langsung mengakses menu "Bayar Tagihan" dan memasukkan ID Tagihan yang telah diberikan oleh staf Lampung Post.
+                    Tidak perlu. Anda bisa langsung memesan iklan melalui menu "Pesan Iklan Baru" atau membayar tagihan dengan memasukkan ID Tagihan yang telah diberikan oleh staf Lampung Post — semua tanpa akun.
                 </p>
             </details>
 
             <!-- Question 2 -->
+            <details class="group bg-white rounded-2xl border border-slate-200/80 p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer shadow-xs transition hover:border-slate-300">
+                <summary class="flex items-center justify-between font-bold text-slate-900 text-sm">
+                    <span>Bagaimana cara memesan slot iklan baru?</span>
+                    <span class="transition group-open:rotate-180 text-slate-400 group-hover:text-red-600">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </summary>
+                <p class="mt-3 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                    Klik tombol "Pesan Iklan Baru" dari halaman mana pun. Anda akan dibimbing melalui 4 langkah: pilih kategori & format, isi teks & jadwal, unggah media (opsional), lalu isi data pembayaran. Total harga terhitung otomatis.
+                </p>
+            </details>
+
+            <!-- Question 3 -->
             <details class="group bg-white rounded-2xl border border-slate-200/80 p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer shadow-xs transition hover:border-slate-300">
                 <summary class="flex items-center justify-between font-bold text-slate-900 text-sm">
                     <span>Metode pembayaran apa saja yang didukung?</span>
@@ -481,7 +585,7 @@
                 </p>
             </details>
 
-            <!-- Question 3 -->
+            <!-- Question 4 -->
             <details class="group bg-white rounded-2xl border border-slate-200/80 p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer shadow-xs transition hover:border-slate-300">
                 <summary class="flex items-center justify-between font-bold text-slate-900 text-sm">
                     <span>Apakah kuitansi digital PDF yang diterbitkan sah untuk keperluan perpajakan/pembukuan?</span>
@@ -494,7 +598,7 @@
                 </p>
             </details>
 
-            <!-- Question 4 -->
+            <!-- Question 5 -->
             <details class="group bg-white rounded-2xl border border-slate-200/80 p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer shadow-xs transition hover:border-slate-300">
                 <summary class="flex items-center justify-between font-bold text-slate-900 text-sm">
                     <span>Bagaimana jika saya kehilangan nomor ID Tagihan?</span>

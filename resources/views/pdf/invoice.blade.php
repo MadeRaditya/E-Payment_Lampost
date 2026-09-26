@@ -428,14 +428,21 @@
                 </div>
             </td>
             <td>
-                <div class="party-box right">
-                    <div class="party-heading">Ditujukan Kepada (Pengiklan)</div>
-                    <div class="party-name">{{ $invoice->advertiser_name }}</div>
-                    <div class="party-detail">
-                        Kontak: {{ $invoice->advertiser_contact }}<br>
-                        Penempatan: {{ $invoice->ad_slot }}<br>
-                        ID Pelanggan: Klien Resmi Lampung Post
-                    </div>
+                <div class="bg-slate-50/80 rounded-2xl p-5 border border-slate-200/80">
+                    <span class="text-[11px] font-bold text-red-600 uppercase tracking-wider block mb-2 pb-1 border-b border-slate-200">
+                        Ditujukan Kepada (Billed To)
+                    </span>
+                    <p class="font-extrabold text-sm text-slate-900">{{ $invoice->billing_name ?? $invoice->advertiser_name }}</p>
+                    <p class="text-xs text-slate-600 font-mono mt-0.5">{{ $invoice->billing_email ?? $invoice->advertiser_contact }}</p>
+                    @if($invoice->billing_npwp_nik)
+                        <p class="text-xs text-slate-600 font-mono mt-0.5">NPWP/NIK: {{ $invoice->billing_npwp_nik }}</p>
+                    @endif
+                    @if($invoice->billing_phone)
+                        <p class="text-xs text-slate-600 mt-0.5">Telp: {{ $invoice->billing_phone }}</p>
+                    @endif
+                    @if($invoice->billing_address)
+                        <p class="text-xs text-slate-500 mt-1 leading-relaxed">{{ $invoice->billing_address }}</p>
+                    @endif
                 </div>
             </td>
         </tr>
@@ -452,19 +459,36 @@
                 <th class="text-right" style="width: 24%;">Subtotal (IDR)</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="divide-y divide-slate-100 text-slate-800">
             <tr>
-                <td class="text-center">1</td>
-                <td>
-                    <strong>Penayangan Slot Iklan: {{ $invoice->ad_slot }}</strong><br>
-                    <span style="color: #64748b; font-size: 8px;">{{ $invoice->description }}</span>
+                <td class="py-4 px-4 text-center font-bold text-slate-400">1</td>
+                <td class="py-4 px-4">
+                    <p class="font-extrabold text-slate-900 text-sm leading-tight">
+                        {{ $invoice->ad_title ?? 'Penayangan Slot Iklan: ' . ($invoice->ad_slot ?? '-') }}
+                    </p>
+                    @if($invoice->category)
+                        <p class="text-xs text-slate-600 mt-1">
+                            <strong>Kategori:</strong> {{ $invoice->category }} › {{ $invoice->subcategory }}
+                        </p>
+                    @endif
+                    @if($invoice->ad_format)
+                        @php $fmt = config('ad_booking.formats')[$invoice->ad_format] ?? null; @endphp
+                        @if($fmt)
+                            <p class="text-xs text-slate-600"><strong>Format:</strong> {{ $fmt['name'] }} ({{ $fmt['size'] }})</p>
+                        @endif
+                    @endif
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed italic">
+                        {{ $invoice->ad_text ?? $invoice->description }}
+                    </p>
                 </td>
-                <td class="text-center">
-                    {{ $invoice->ad_duration_days }} Hari<br>
-                    <span style="color: #64748b; font-size: 7.5px;">Mulai: {{ $invoice->ad_start_date ? $invoice->ad_start_date->translatedFormat('d/m/Y') : '-' }}</span>
+                <td class="py-4 px-4 text-center">
+                    <span class="font-bold text-slate-900 block">{{ $invoice->ad_duration_days ?? 7 }} Hari</span>
+                    <span class="text-[11px] text-slate-400">
+                        Mulai: {{ $invoice->ad_start_date ? $invoice->ad_start_date->translatedFormat('d M Y') : '-' }}
+                    </span>
                 </td>
-                <td class="text-center">1 Paket</td>
-                <td class="text-right" style="font-weight: bold;">
+                <td class="py-4 px-4 text-center font-semibold text-slate-700">1 Paket</td>
+                <td class="py-4 px-4 text-right font-black text-slate-900 text-sm">
                     Rp {{ number_format($invoice->amount, 0, ',', '.') }}
                 </td>
             </tr>

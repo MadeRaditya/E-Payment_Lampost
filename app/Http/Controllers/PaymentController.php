@@ -18,7 +18,8 @@ class PaymentController extends Controller
         if ($request->filled('q')) {
             $query->whereHas('invoice', function ($builder) use ($request) {
                 $builder->where('invoice_number', 'like', "%{$request->q}%")
-                    ->orWhere('advertiser_name', 'like', "%{$request->q}%");
+                    ->orWhere('advertiser_name', 'like', "%{$request->q}%")
+                    ->orWhere('billing_name', 'like', "%{$request->q}%");
             });
         }
 

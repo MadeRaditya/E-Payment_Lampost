@@ -3,6 +3,16 @@
 @section('title', 'Faktur Tagihan ' . $invoice->invoice_number . ' — PT Lampung Post')
 
 @section('content')
+@php
+    $fmt = config('ad_booking.formats')[$invoice->ad_format] ?? null;
+    $isSelfBooking = !empty($invoice->category) || !empty($invoice->ad_title);
+    $billingName = $invoice->billing_name ?? $invoice->advertiser_name ?? '-';
+    $billingEmail = $invoice->billing_email ?? $invoice->advertiser_contact ?? '-';
+    $billingPhone = $invoice->billing_phone ?? '-';
+    $billingNpwp = $invoice->billing_npwp_nik ?? null;
+    $billingAddress = $invoice->billing_address ?? null;
+@endphp
+
 <div class="py-10 lg:py-16 bg-slate-100/70">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
@@ -44,7 +54,6 @@
 
             <!-- Letterhead / Kop Surat Resmi -->
             <div class="pb-6 border-b-2 border-red-600 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-                <!-- Company Brand -->
                 <div class="flex items-center gap-4">
                     <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 text-white font-extrabold flex items-center justify-center text-2xl shadow-md shadow-red-600/20 flex-shrink-0">
                         LP
@@ -56,7 +65,6 @@
                     </div>
                 </div>
 
-                <!-- Company Address & Legal Info -->
                 <div class="text-left sm:text-right text-xs text-slate-500 space-y-0.5 sm:border-l-0 border-l-2 border-slate-200 pl-3 sm:pl-0">
                     <p class="font-medium text-slate-700">Jl. Soekarno Hatta No. 108, Rajabasa, Bandar Lampung 35144</p>
                     <p>Telp: (0721) 783693 / 783694 • Fax: (0721) 783695</p>
@@ -110,14 +118,30 @@
                     <p class="text-xs text-slate-500 mt-1">Petugas: <span class="font-semibold text-slate-700">{{ $invoice->creator->name ?? 'Admin Keuangan' }}</span></p>
                 </div>
 
-                <!-- Billed To -->
+                <!-- Billed To (UPDATED dengan billing fields) -->
                 <div class="bg-slate-50/80 rounded-2xl p-5 border border-slate-200/80">
                     <span class="text-[11px] font-bold text-red-600 uppercase tracking-wider block mb-2 pb-1 border-b border-slate-200">
                         Ditujukan Kepada (Billed To)
                     </span>
-                    <p class="font-extrabold text-sm text-slate-900">{{ $invoice->advertiser_name }}</p>
-                    <p class="text-xs text-slate-600 font-mono mt-0.5">{{ $invoice->advertiser_contact }}</p>
-                    <p class="text-xs text-slate-500 mt-1">Mitra Pengiklan Resmi Lampung Post</p>
+                    <p class="font-extrabold text-sm text-slate-900">{{ $billingName }}</p>
+                    
+                    @if($billingEmail !== '-')
+                        <p class="text-xs text-slate-600 font-mono mt-0.5 break-all">{{ $billingEmail }}</p>
+                    @endif
+
+                    @if($billingPhone !== '-')
+                        <p class="text-xs text-slate-600 mt-0.5">Telp/WA: <span class="font-mono">{{ $billingPhone }}</span></p>
+                    @endif
+
+                    @if($billingNpwp)
+                        <p class="text-xs text-slate-600 font-mono mt-0.5">NPWP/NIK: {{ $billingNpwp }}</p>
+                    @endif
+
+                    @if($billingAddress)
+                        <p class="text-[11px] text-slate-500 mt-2 leading-relaxed border-t border-slate-200 pt-2">{{ $billingAddress }}</p>
+                    @else
+                        <p class="text-xs text-slate-500 mt-1">Mitra Pengiklan Resmi Lampung Post</p>
+                    @endif
                 </div>
             </div>
 
@@ -139,7 +163,7 @@
                 </div>
             </div>
 
-            <!-- Itemized Table (Standar Industri) -->
+            <!-- Itemized Table (UPDATED dengan konten booking baru) -->
             <div class="overflow-x-auto mb-6">
                 <table class="w-full text-left text-xs sm:text-sm border-collapse">
                     <thead>
@@ -153,29 +177,91 @@
                     </thead>
                     <tbody class="divide-y divide-slate-100 text-slate-800">
                         <tr>
-                            <td class="py-4 px-4 text-center font-bold text-slate-400">1</td>
-                            <td class="py-4 px-4">
+                            <td class="py-4 px-4 text-center font-bold text-slate-400 align-top">1</td>
+                            <td class="py-4 px-4 align-top">
+                                <!-- Judul Iklan / Slot Iklan -->
                                 <p class="font-extrabold text-slate-900 text-sm sm:text-base leading-tight">
-                                    Penayangan Slot Iklan: {{ $invoice->ad_slot }}
+                                    @if($invoice->ad_title)
+                                        {{ $invoice->ad_title }}
+                                    @else
+                                        Penayangan Slot Iklan: {{ $invoice->ad_slot ?? 'Custom' }}
+                                    @endif
                                 </p>
-                                <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                                    {{ $invoice->description }}
-                                </p>
+
+                                <!-- Kategori & Sub-Kategori -->
+                                @if($invoice->category)
+                                    <p class="text-xs text-slate-600 mt-1.5">
+                                        <span class="font-bold text-slate-700">Kategori:</span> {{ $invoice->category }}
+                                        @if($invoice->subcategory) › {{ $invoice->subcategory }} @endif
+                                    </p>
+                                @endif
+
+                                <!-- Format Iklan -->
+                                @if($fmt)
+                                    <p class="text-xs text-slate-600 mt-1">
+                                        <span class="font-bold text-slate-700">Format:</span> {{ $fmt['name'] }}
+                                        <span class="text-slate-400">({{ $fmt['size'] }})</span>
+                                    </p>
+                                @endif
+
+                                <!-- Teks Iklan -->
+                                @if($invoice->ad_text)
+                                    <p class="text-xs text-slate-500 mt-2 leading-relaxed italic border-l-2 border-slate-200 pl-3">
+                                        {{ \Illuminate\Support\Str::limit($invoice->ad_text, 300) }}
+                                    </p>
+                                @elseif($invoice->description)
+                                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                                        {{ $invoice->description }}
+                                    </p>
+                                @endif
+
+                                <!-- Media Info -->
+                                @if(!empty($invoice->media_files))
+                                    <p class="text-[11px] text-slate-400 mt-2">
+                                        📎 {{ count($invoice->media_files) }} file media dilampirkan
+                                    </p>
+                                @endif
                             </td>
-                            <td class="py-4 px-4 text-center">
-                                <span class="font-bold text-slate-900 block">{{ $invoice->ad_duration_days }} Hari</span>
+                            <td class="py-4 px-4 text-center align-top">
+                                <span class="font-bold text-slate-900 block">{{ $invoice->ad_duration_days ?? 7 }} Hari</span>
                                 <span class="text-[11px] text-slate-400">
                                     Mulai: {{ $invoice->ad_start_date ? $invoice->ad_start_date->translatedFormat('d M Y') : '-' }}
                                 </span>
                             </td>
-                            <td class="py-4 px-4 text-center font-semibold text-slate-700">1 Paket</td>
-                            <td class="py-4 px-4 text-right font-black text-slate-900 text-sm sm:text-base">
+                            <td class="py-4 px-4 text-center font-semibold text-slate-700 align-top">1 Paket</td>
+                            <td class="py-4 px-4 text-right font-black text-slate-900 text-sm sm:text-base align-top">
                                 Rp {{ number_format($invoice->amount, 0, ',', '.') }}
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+
+            <!-- Media Preview Section (HANYA muncul jika ada media) -->
+            @if(!empty($invoice->media_files))
+                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 mb-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <span class="text-xs font-black text-slate-900 uppercase tracking-wider">Lampiran Media ({{ count($invoice->media_files) }} File)</span>
+                    </div>
+                    <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                        @foreach($invoice->media_files as $path)
+                            <a href="{{ Storage::url($path) }}" target="_blank"
+                               class="relative rounded-xl overflow-hidden border border-slate-200 bg-white aspect-square hover:border-red-500 hover:shadow-md transition group">
+                                @if(\Illuminate\Support\Str::endsWith(strtolower($path), ['.jpg','.jpeg','.png','.webp']))
+                                    <img src="{{ Storage::url($path) }}" class="w-full h-full object-cover" alt="media">
+                                @else
+                                    <div class="w-full h-full flex flex-col items-center justify-center text-slate-400 bg-slate-50">
+                                        <svg class="w-6 h-6 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                                        <span class="text-[9px] font-bold">PDF</span>
+                                    </div>
+                                @endif
+                            </a>
+                        @endforeach
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-2 italic">*Klik untuk membuka file ukuran penuh.</p>
+                </div>
+            @endif
 
             <!-- Financial Calculation Block -->
             <div class="border-t border-slate-200 pt-4 mb-6">
@@ -250,13 +336,13 @@
                 </ol>
             </div>
 
-            <!-- Corporate Signature Block -->
+            <!-- Corporate Signature Block (UPDATED dengan billing_name) -->
             <div class="grid grid-cols-2 gap-8 text-center text-xs pt-4 border-t border-slate-200">
                 <div>
                     <p class="text-slate-500">Penerima Tagihan (Pengiklan)</p>
                     <div class="h-16"></div>
-                    <p class="font-bold text-slate-900 border-t border-slate-300 pt-1.5 inline-block min-w-[160px]">
-                        {{ $invoice->advertiser_name }}
+                    <p class="font-bold text-slate-900 border-t border-slate-300 pt-1.5 inline-block min-w-[160px] max-w-[220px] truncate">
+                        {{ $billingName }}
                     </p>
                     <p class="text-[11px] text-slate-400">Penanggung Jawab Pesanan</p>
                 </div>

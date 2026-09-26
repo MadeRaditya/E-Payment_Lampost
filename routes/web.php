@@ -9,6 +9,8 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BookingController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +48,31 @@ Route::prefix('pay')->group(function () {
     Route::get('/{invoice_number}/download', [PublicPaymentController::class, 'downloadInvoice'])->name('pay.download');
     Route::get('/{invoice_number}/print', [PublicPaymentController::class, 'printInvoice'])->name('pay.print');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Public Booking (Multi-Step) — Pemesan Iklan Mandiri
+|--------------------------------------------------------------------------
+*/
+Route::prefix('booking')->name('booking.')->group(function () {
+    // Step 1
+    Route::get('/step-1', [BookingController::class, 'step1'])->name('step1');
+    Route::post('/step-1', [BookingController::class, 'step1Store'])->name('step1.store');
+
+    // Step 2
+    Route::get('/step-2', [BookingController::class, 'step2'])->name('step2');
+    Route::post('/step-2', [BookingController::class, 'step2Store'])->name('step2.store');
+    Route::post('/preview', [BookingController::class, 'preview'])->name('preview'); // AJAX
+
+    // Step 3
+    Route::get('/step-3', [BookingController::class, 'step3'])->name('step3');
+    Route::post('/step-3', [BookingController::class, 'step3Store'])->name('step3.store');
+
+    // Step 4
+    Route::get('/step-4', [BookingController::class, 'step4'])->name('step4');
+    Route::post('/step-4', [BookingController::class, 'step4Store'])->name('step4.store');
+});
+
 
 // Payment Gateway Webhook (Midtrans Notification)
 Route::post('/api/webhook/payment', [WebhookController::class, 'handle'])->name('webhook.payment');
