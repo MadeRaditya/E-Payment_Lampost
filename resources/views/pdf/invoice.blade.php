@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Invoice {{ $invoice->invoice_number }} — PT Lampung Post</title>
@@ -7,33 +8,37 @@
         @page {
             margin: 20mm 18mm 20mm 18mm;
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: DejaVu Sans, Arial, sans-serif;
             font-size: 9.5px;
             color: #1f2937;
             line-height: 1.4;
         }
-        
+
         .top-accent {
             height: 5px;
             background-color: #dc2626;
             margin-bottom: 18px;
         }
-        
+
         .header-table {
             width: 100%;
             margin-bottom: 16px;
             padding-bottom: 12px;
             border-bottom: 2px solid #dc2626;
         }
+
         .header-table td {
             vertical-align: middle;
         }
+
         .logo-box {
             display: inline-block;
             width: 44px;
@@ -46,6 +51,7 @@
             line-height: 44px;
             border-radius: 4px;
         }
+
         .brand-title {
             font-size: 17px;
             font-weight: bold;
@@ -53,25 +59,29 @@
             margin-left: 10px;
             letter-spacing: 0.5px;
         }
+
         .brand-subtitle {
             font-size: 8.5px;
             color: #6b7280;
             margin-left: 10px;
         }
+
         .company-meta {
             text-align: right;
             font-size: 8.5px;
             color: #4b5563;
             line-height: 1.45;
         }
-        
+
         .doc-header {
             width: 100%;
             margin-bottom: 18px;
         }
+
         .doc-header td {
             vertical-align: top;
         }
+
         .doc-title {
             font-size: 20px;
             font-weight: bold;
@@ -79,6 +89,7 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
+
         .doc-number {
             font-size: 12px;
             font-weight: bold;
@@ -86,7 +97,7 @@
             margin-top: 2px;
             font-family: DejaVu Sans Mono, monospace;
         }
-        
+
         .status-badge {
             display: inline-block;
             padding: 4px 16px;
@@ -96,44 +107,52 @@
             text-transform: uppercase;
             border-radius: 3px;
         }
+
         .status-paid {
             background-color: #dcfce7;
             border: 1px solid #16a34a;
             color: #15803d;
         }
+
         .status-unpaid {
             background-color: #fef3c7;
             border: 1px solid #d97706;
             color: #b45309;
         }
+
         .status-expired {
             background-color: #f3f4f6;
             border: 1px solid #9ca3af;
             color: #4b5563;
         }
-        
+
         .parties-table {
             width: 100%;
             margin-bottom: 20px;
             border-collapse: collapse;
         }
-        .parties-table > tbody > tr > td {
+
+        .parties-table>tbody>tr>td {
             width: 50%;
             vertical-align: top;
             padding: 0;
         }
+
         .party-box {
             background-color: #f9fafb;
             border: 1px solid #e5e7eb;
             padding: 10px 14px;
             border-radius: 4px;
         }
+
         .party-box.left {
             margin-right: 6px;
         }
+
         .party-box.right {
             margin-left: 6px;
         }
+
         .party-heading {
             font-size: 8.5px;
             font-weight: bold;
@@ -144,18 +163,20 @@
             border-bottom: 1px solid #e5e7eb;
             padding-bottom: 3px;
         }
+
         .party-name {
             font-size: 11px;
             font-weight: bold;
             color: #111827;
             margin-bottom: 2px;
         }
+
         .party-detail {
             font-size: 8.5px;
             color: #4b5563;
             line-height: 1.4;
         }
-        
+
         .meta-strip {
             width: 100%;
             border-collapse: collapse;
@@ -164,24 +185,28 @@
             border-left: 3px solid #dc2626;
             padding: 6px 10px;
         }
+
         .meta-strip td {
             padding: 4px 8px;
             font-size: 9px;
         }
+
         .meta-strip .meta-label {
             color: #7f1d1d;
             font-weight: bold;
         }
+
         .meta-strip .meta-val {
             color: #111827;
             font-weight: bold;
         }
-        
+
         .items-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 16px;
         }
+
         .items-table th {
             background-color: #1e293b;
             color: #ffffff;
@@ -192,48 +217,58 @@
             padding: 8px 10px;
             text-align: left;
         }
+
         .items-table th.text-right {
             text-align: right;
         }
+
         .items-table th.text-center {
             text-align: center;
         }
+
         .items-table td {
             padding: 9px 10px;
             border-bottom: 1px solid #e5e7eb;
             font-size: 9px;
             vertical-align: top;
         }
+
         .items-table td.text-right {
             text-align: right;
         }
+
         .items-table td.text-center {
             text-align: center;
         }
-        
+
         .summary-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 16px;
         }
+
         .summary-table td {
             padding: 5px 10px;
             font-size: 9px;
         }
+
         .summary-table .col-blank {
             width: 55%;
         }
+
         .summary-table .col-label {
             width: 20%;
             color: #4b5563;
             text-align: right;
         }
+
         .summary-table .col-val {
             width: 25%;
             color: #111827;
             font-weight: bold;
             text-align: right;
         }
+
         .grand-total-row td {
             padding: 10px 10px;
             background-color: #dc2626;
@@ -241,12 +276,13 @@
             font-size: 11px;
             font-weight: bold;
         }
+
         .grand-total-row .col-val {
             font-size: 14px;
             color: #ffffff !important;
             letter-spacing: 0.5px;
         }
-        
+
         .terbilang-box {
             background-color: #f8fafc;
             border: 1px dashed #cbd5e1;
@@ -256,29 +292,34 @@
             margin-bottom: 18px;
             font-style: italic;
         }
-        
+
         .payment-instruct {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 16px;
         }
-        .payment-instruct > tbody > tr > td {
+
+        .payment-instruct>tbody>tr>td {
             width: 50%;
             vertical-align: top;
             padding: 0;
         }
+
         .instruct-card {
             background-color: #f9fafb;
             border: 1px solid #e5e7eb;
             padding: 10px 12px;
             border-radius: 4px;
         }
+
         .instruct-card.left {
             margin-right: 5px;
         }
+
         .instruct-card.right {
             margin-left: 5px;
         }
+
         .instruct-title {
             font-size: 8.5px;
             font-weight: bold;
@@ -286,17 +327,19 @@
             margin-bottom: 4px;
             text-transform: uppercase;
         }
+
         .instruct-desc {
             font-size: 8px;
             color: #64748b;
             line-height: 1.4;
         }
+
         .bank-item {
             margin-top: 4px;
             font-size: 8.5px;
             color: #1f2937;
         }
-        
+
         .terms-box {
             background-color: #fffbeb;
             border-left: 3px solid #f59e0b;
@@ -306,20 +349,23 @@
             margin-bottom: 20px;
             line-height: 1.35;
         }
-        
+
         .signatures {
             width: 100%;
             page-break-inside: avoid;
         }
+
         .signatures td {
             width: 50%;
             text-align: center;
             vertical-align: top;
             font-size: 8.5px;
         }
+
         .sig-space {
             height: 50px;
         }
+
         .sig-name {
             font-weight: bold;
             color: #111827;
@@ -328,11 +374,12 @@
             padding-top: 3px;
             min-width: 160px;
         }
+
         .sig-role {
             color: #6b7280;
             font-size: 8px;
         }
-        
+
         .footer {
             margin-top: 20px;
             padding-top: 8px;
@@ -342,12 +389,14 @@
             color: #9ca3af;
             line-height: 1.5;
         }
+
         .verify-link {
             color: #dc2626;
             font-weight: bold;
         }
     </style>
 </head>
+
 <body>
 
     <div class="top-accent"></div>
@@ -384,7 +433,7 @@
                 <div class="doc-number">{{ $invoice->invoice_number }}</div>
             </td>
             <td style="width: 35%; text-align: right;">
-                @if($invoice->status === 'paid')
+                @if ($invoice->status === 'paid')
                     <div class="status-badge status-paid">LUNAS / PAID</div>
                 @elseif($invoice->status === 'unpaid')
                     <div class="status-badge status-unpaid">MENUNGGU PEMBAYARAN</div>
@@ -399,15 +448,15 @@
     <table class="meta-strip">
         <tr>
             <td>
-                <span class="meta-label">Tanggal Diterbitkan:</span> 
+                <span class="meta-label">Tanggal Diterbitkan:</span>
                 <span class="meta-val">{{ $invoice->created_at->translatedFormat('d F Y') }}</span>
             </td>
             <td>
-                <span class="meta-label">Batas Waktu Bayar:</span> 
+                <span class="meta-label">Batas Waktu Bayar:</span>
                 <span class="meta-val">{{ $invoice->due_date->translatedFormat('d F Y') }}</span>
             </td>
             <td>
-                <span class="meta-label">Petugas Finance:</span> 
+                <span class="meta-label">Petugas Finance:</span>
                 <span class="meta-val">{{ $invoice->creator->name ?? 'Admin Keuangan' }}</span>
             </td>
         </tr>
@@ -429,18 +478,22 @@
             </td>
             <td>
                 <div class="bg-slate-50/80 rounded-2xl p-5 border border-slate-200/80">
-                    <span class="text-[11px] font-bold text-red-600 uppercase tracking-wider block mb-2 pb-1 border-b border-slate-200">
+                    <span
+                        class="text-[11px] font-bold text-red-600 uppercase tracking-wider block mb-2 pb-1 border-b border-slate-200">
                         Ditujukan Kepada (Billed To)
                     </span>
-                    <p class="font-extrabold text-sm text-slate-900">{{ $invoice->billing_name ?? $invoice->advertiser_name }}</p>
-                    <p class="text-xs text-slate-600 font-mono mt-0.5">{{ $invoice->billing_email ?? $invoice->advertiser_contact }}</p>
-                    @if($invoice->billing_npwp_nik)
-                        <p class="text-xs text-slate-600 font-mono mt-0.5">NPWP/NIK: {{ $invoice->billing_npwp_nik }}</p>
+                    <p class="font-extrabold text-sm text-slate-900">
+                        {{ $invoice->billing_name ?? $invoice->advertiser_name }}</p>
+                    <p class="text-xs text-slate-600 font-mono mt-0.5">
+                        {{ $invoice->billing_email ?? $invoice->advertiser_contact }}</p>
+                    @if ($invoice->billing_npwp_nik)
+                        <p class="text-xs text-slate-600 font-mono mt-0.5">NPWP/NIK: {{ $invoice->billing_npwp_nik }}
+                        </p>
                     @endif
-                    @if($invoice->billing_phone)
+                    @if ($invoice->billing_phone)
                         <p class="text-xs text-slate-600 mt-0.5">Telp: {{ $invoice->billing_phone }}</p>
                     @endif
-                    @if($invoice->billing_address)
+                    @if ($invoice->billing_address)
                         <p class="text-xs text-slate-500 mt-1 leading-relaxed">{{ $invoice->billing_address }}</p>
                     @endif
                 </div>
@@ -466,15 +519,16 @@
                     <p class="font-extrabold text-slate-900 text-sm leading-tight">
                         {{ $invoice->ad_title ?? 'Penayangan Slot Iklan: ' . ($invoice->ad_slot ?? '-') }}
                     </p>
-                    @if($invoice->category)
+                    @if ($invoice->category)
                         <p class="text-xs text-slate-600 mt-1">
                             <strong>Kategori:</strong> {{ $invoice->category }} › {{ $invoice->subcategory }}
                         </p>
                     @endif
-                    @if($invoice->ad_format)
+                    @if ($invoice->ad_format)
                         @php $fmt = config('ad_booking.formats')[$invoice->ad_format] ?? null; @endphp
-                        @if($fmt)
-                            <p class="text-xs text-slate-600"><strong>Format:</strong> {{ $fmt['name'] }} ({{ $fmt['size'] }})</p>
+                        @if ($fmt)
+                            <p class="text-xs text-slate-600"><strong>Format:</strong> {{ $fmt['name'] }}
+                                ({{ $fmt['size'] }})</p>
                         @endif
                     @endif
                     <p class="text-xs text-slate-500 mt-1 leading-relaxed italic">
@@ -526,7 +580,9 @@
                 <div class="instruct-card left">
                     <div class="instruct-title">1. Pembayaran Digital Real-Time</div>
                     <div class="instruct-desc">
-                        Gunakan portal pembayaran mandiri Lampung Post untuk membayar via <strong>QRIS Semua Bank & e-Wallet</strong> (BCA, Mandiri, GoPay, OVO, ShopeePay) atau <strong>Virtual Account</strong>.<br>
+                        Gunakan portal pembayaran mandiri Lampung Post untuk membayar via <strong>QRIS Semua Bank &
+                            e-Wallet</strong> (BCA, Mandiri, GoPay, OVO, ShopeePay) atau <strong>Virtual
+                            Account</strong>.<br>
                         Tautan bayar: <span style="color: #dc2626; font-family: monospace;">{{ $payment_url }}</span>
                     </div>
                 </div>
@@ -535,9 +591,11 @@
                 <div class="instruct-card right">
                     <div class="instruct-title">2. Transfer Rekening Resmi Perusahaan</div>
                     <div class="instruct-desc">
-                        @foreach($company['bank_accounts'] as $acc)
+                        @foreach ($company['bank_accounts'] as $acc)
                             <div class="bank-item">
-                                <strong>{{ $acc['bank'] }}</strong>: <span style="font-family: monospace; font-weight: bold;">{{ $acc['account_number'] }}</span> (a.n. {{ $acc['account_name'] }})
+                                <strong>{{ $acc['bank'] }}</strong>: <span
+                                    style="font-family: monospace; font-weight: bold;">{{ $acc['account_number'] }}</span>
+                                (a.n. {{ $acc['account_name'] }})
                             </div>
                         @endforeach
                     </div>
@@ -549,33 +607,55 @@
     <!-- Terms & Legal Notice -->
     <div class="terms-box">
         <strong>Ketentuan & Keterangan:</strong><br>
-        1. Tagihan ini sah diterbitkan secara elektronik oleh PT Lampung Post sebagai dasar penagihan layanan iklan/kemitraan.<br>
-        2. Mohon selesaikan pembayaran sebelum tanggal jatuh tempo agar slot tayang tidak dibatalkan secara otomatis oleh sistem.<br>
-        3. Kuitansi resmi berformat PDF berstempel sah akan diterbitkan secara otomatis setelah dana berhasil diverifikasi.
+        1. Tagihan ini sah diterbitkan secara elektronik oleh PT Lampung Post sebagai dasar penagihan layanan
+        iklan/kemitraan.<br>
+        2. Mohon selesaikan pembayaran sebelum tanggal jatuh tempo agar slot tayang tidak dibatalkan secara otomatis
+        oleh sistem.<br>
+        3. Kuitansi resmi berformat PDF berstempel sah akan diterbitkan secara otomatis setelah dana berhasil
+        diverifikasi.
     </div>
 
-    <!-- Signature Section -->
-    <table class="signatures">
+    <!-- Signature Block -->
+    <table class="signatures" style="border-top: 1px solid #e5e7eb; padding-top: 10px; margin-top: 20px;">
         <tr>
             <td>
-                <div>Penerima / Pengiklan</div>
-                <div class="sig-space"></div>
-                <div class="sig-name">{{ $invoice->advertiser_name }}</div>
-                <div class="sig-role">Penanggung Jawab Iklan</div>
+                <p style="color: #6b7280; font-size: 8.5px; margin-bottom: 3px;">Penerima Tagihan (Pengiklan)</p>
+                <div class="sig-space" style="height: 60px; display: block;">
+                    @if ($invoice->hasSignature())
+                        <img src="{{ $invoice->signature_data }}" alt="Signature"
+                            style="max-height: 55px; max-width: 180px; display: block; margin: 3px auto;">
+                    @endif
+                </div>
+                <div class="sig-name">
+                    {{ $invoice->signed_by_name ?? $invoice->billing_name }}
+                </div>
+                <div class="sig-role">Penanggung Jawab Pesanan</div>
             </td>
+
             <td>
-                <div>Bandar Lampung, {{ $invoice->created_at->translatedFormat('d F Y') }}</div>
-                <div class="sig-space"></div>
-                <div class="sig-name">{{ $invoice->creator->name ?? 'Admin Keuangan' }}</div>
-                <div class="sig-role">Bagian Keuangan PT Lampung Post</div>
+                <p style="color: #6b7280; font-size: 8.5px; margin-bottom: 3px;">
+                    Bandar Lampung, {{ $invoice->created_at->translatedFormat('d F Y') }}
+                </p>
+                <div class="sig-space" style="height: 60px; display: block; text-align: center;">
+                    <span
+                        style="display: inline-block; font-family: DejaVu Sans Mono, monospace; color: #dc2626; background-color: #fef2f2; border: 1px solid #fecaca; padding: 4px 10px; font-size: 9px; font-weight: bold; letter-spacing: 1px; margin-top: 12px; text-transform: uppercase;">
+                        Signed Digitally
+                    </span>
+                </div>
+                <div class="sig-name">
+                    {{ $invoice->creator->name ?? 'Admin Keuangan' }}
+                </div>
+                <div class="sig-role">Divisi Keuangan PT Lampung Post</div>
             </td>
         </tr>
     </table>
 
     <div class="footer">
         Faktur tagihan elektronik ini diterbitkan secara otomatis oleh Sistem E-Payment PT Lampung Post.<br>
-        Verifikasi keaslian & status pembayaran secara online melalui: <span class="verify-link">{{ $payment_url }}</span>
+        Verifikasi keaslian & status pembayaran secara online melalui: <span
+            class="verify-link">{{ $payment_url }}</span>
     </div>
 
 </body>
+
 </html>

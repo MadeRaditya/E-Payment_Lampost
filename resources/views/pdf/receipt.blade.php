@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Kuitansi {{ $receipt->receipt_number }}</title>
@@ -7,33 +8,37 @@
         @page {
             margin: 25mm 20mm 25mm 20mm;
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: DejaVu Sans, Arial, sans-serif;
             font-size: 10px;
             color: #1f2937;
             line-height: 1.4;
         }
-        
+
         .top-accent {
             height: 6px;
             background-color: #dc2626;
             margin-bottom: 20px;
         }
-        
+
         .header {
             width: 100%;
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 2px solid #dc2626;
         }
+
         .header td {
             vertical-align: middle;
         }
+
         .logo-box {
             display: inline-block;
             width: 42px;
@@ -45,28 +50,32 @@
             font-weight: bold;
             line-height: 42px;
         }
+
         .brand-name {
             font-size: 18px;
             font-weight: bold;
             color: #111827;
             margin-left: 10px;
         }
+
         .brand-tagline {
             font-size: 9px;
             color: #6b7280;
             margin-left: 10px;
         }
+
         .company-info {
             text-align: right;
             font-size: 9px;
             color: #4b5563;
             line-height: 1.5;
         }
-        
+
         .doc-title {
             text-align: center;
             margin: 25px 0 8px 0;
         }
+
         .doc-title h1 {
             font-size: 22px;
             font-weight: bold;
@@ -74,17 +83,19 @@
             color: #111827;
             text-transform: uppercase;
         }
+
         .doc-subtitle {
             text-align: center;
             font-size: 10px;
             color: #6b7280;
             margin-bottom: 20px;
         }
-        
+
         .badge-wrapper {
             text-align: center;
             margin-bottom: 25px;
         }
+
         .badge {
             display: inline-block;
             padding: 6px 40px;
@@ -95,7 +106,7 @@
             font-weight: bold;
             letter-spacing: 4px;
         }
-        
+
         .section-title {
             font-size: 10px;
             font-weight: bold;
@@ -107,86 +118,98 @@
             margin-bottom: 8px;
             background-color: #fef2f2;
         }
-        
+
         .info-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 18px;
         }
+
         .info-table td {
             padding: 7px 0;
             font-size: 10px;
             vertical-align: top;
             border-bottom: 1px dotted #e5e7eb;
         }
+
         .info-table td.label {
             color: #6b7280;
             width: 38%;
         }
+
         .info-table td.value {
             color: #111827;
             font-weight: bold;
             text-align: right;
         }
-        
+
         .two-col {
             width: 100%;
             margin-bottom: 15px;
         }
-        .two-col > tbody > tr > td {
+
+        .two-col>tbody>tr>td {
             width: 50%;
             vertical-align: top;
             padding: 0;
         }
+
         .two-col td.col-left {
             padding-right: 8px;
         }
+
         .two-col td.col-right {
             padding-left: 8px;
         }
-        
+
         .amount-box {
             width: 100%;
             background-color: #dc2626;
             margin: 15px 0 20px 0;
         }
+
         .amount-box td {
             padding: 18px 24px;
             color: #ffffff;
             vertical-align: middle;
         }
+
         .amount-box .label {
             font-size: 10px;
             letter-spacing: 3px;
             text-transform: uppercase;
             opacity: 0.9;
         }
+
         .amount-box .value {
             font-size: 24px;
             font-weight: bold;
             text-align: right;
             letter-spacing: 1px;
         }
-        
+
         .ad-table {
             width: 100%;
             border-collapse: collapse;
         }
+
         .ad-table td {
             padding: 6px 0;
             font-size: 10px;
             vertical-align: top;
             border-bottom: 1px dotted #e5e7eb;
         }
+
         .ad-table td:first-child {
             color: #6b7280;
             width: 40%;
         }
+
         .ad-table td:last-child {
             color: #111827;
             font-weight: bold;
         }
-        
+
         .note {
             background-color: #fffbeb;
             border-left: 3px solid #f59e0b;
@@ -195,33 +218,37 @@
             color: #92400e;
             margin: 15px 0;
         }
-        
+
         .signature-table {
             width: 100%;
             margin-top: 25px;
             page-break-inside: avoid;
         }
+
         .signature-table td {
             width: 50%;
             text-align: center;
             vertical-align: top;
             padding: 0 20px;
         }
+
         .signature-space {
             height: 55px;
         }
+
         .signature-line {
             border-top: 1px solid #374151;
             padding-top: 5px;
             font-size: 10px;
             color: #4b5563;
         }
+
         .signature-name {
             font-weight: bold;
             color: #111827;
             font-size: 10px;
         }
-        
+
         .footer {
             margin-top: 25px;
             padding-top: 10px;
@@ -231,12 +258,14 @@
             color: #9ca3af;
             line-height: 1.6;
         }
+
         .footer .verify-url {
             color: #dc2626;
             font-weight: bold;
         }
     </style>
 </head>
+
 <body>
 
     <div class="top-accent"></div>
@@ -279,7 +308,8 @@
         <tr>
             <td class="label">Tanggal Pembayaran</td>
             <td class="value">
-                {{ $payment->paid_at ? $payment->paid_at->translatedFormat('d F Y, H:i') : $payment->updated_at->translatedFormat('d F Y, H:i') }} WIB
+                {{ $payment->paid_at ? $payment->paid_at->translatedFormat('d F Y, H:i') : $payment->updated_at->translatedFormat('d F Y, H:i') }}
+                WIB
             </td>
         </tr>
         <tr>
@@ -353,10 +383,11 @@
     </table>
 
     <div class="note">
-        <strong>Catatan:</strong> Kuitansi ini sah dan diterbitkan secara digital tanpa memerlukan tanda tangan basah. 
+        <strong>Catatan:</strong> Kuitansi ini sah dan diterbitkan secara digital tanpa memerlukan tanda tangan basah.
         Verifikasi keaslian dokumen dapat dilakukan melalui tautan di bagian bawah.
     </div>
 
+    <!-- Digital Signature Block -->
     <table class="signature-table">
         <tr>
             <td>
@@ -366,10 +397,17 @@
                     <div>Bagian Keuangan</div>
                 </div>
             </td>
+
             <td>
-                <div class="signature-space"></div>
+                <div class="signature-space" style="height: 60px;">
+                    @if ($invoice->hasSignature())
+                        <img src="{{ $invoice->signature_data }}" alt="Signature"
+                            style="max-height: 55px; max-width: 180px; display: block; margin: 3px auto;">
+                    @endif
+                </div>
                 <div class="signature-line">
-                    <div class="signature-name">{{ $invoice->advertiser_name ?? 'Pengiklan' }}</div>
+                    <div class="signature-name">
+                        {{ $invoice->signed_by_name ?? ($invoice->advertiser_name ?? 'Pengiklan') }}</div>
                     <div>Penerima</div>
                 </div>
             </td>
@@ -382,4 +420,5 @@
     </div>
 
 </body>
+
 </html>

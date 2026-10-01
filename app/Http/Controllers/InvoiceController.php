@@ -75,25 +75,32 @@ class InvoiceController extends Controller
             'billing_address'   => 'nullable|string|max:500',
             'payment_preference' => 'nullable|in:online,manual',
 
-            'media.*'           => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:5120',
+            'placement_type'  => 'required|in:online,offline',
+            'signature_data'  => 'nullable|string',
+            'signed_by_name'  => 'nullable|string|max:150',
+            'media.*'         => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:5120',
         ]);
 
-        $data['invoice_number']      = 'INV-' . date('Ymd') . '-' . strtoupper(\Illuminate\Support\Str::random(4));
-        $data['created_by']          = \Illuminate\Support\Facades\Auth::id();
-        $data['status']              = 'unpaid';
-        $data['advertiser_name']     = $data['billing_name'];
-        $data['advertiser_contact']  = $data['billing_email'] ?? $data['billing_phone'] ?? '-';
-        $data['ad_slot']             = $data['ad_format'] ?? 'Custom';
-        $data['description']         = $data['description'] ?? $data['ad_title'] ?? 'Tagihan Iklan Manual';
+        if ($request->filled('signature_data')) {
+            $data['signed_at'] = now();
+            $data['signed_ip'] = $request->ip();
+        }
+
+        $data['invoice_number'] = 'INV-' . date('Ymd') . '-' . strtoupper(\Illuminate\Support\Str::random(4));
+        $data['created_by']     = \Illuminate\Support\Facades\Auth::id();
+        $data['status']         = 'unpaid';
+        $data['advertiser_name']    = $data['billing_name'];
+        $data['advertiser_contact'] = $data['billing_email'] ?? $data['billing_phone'] ?? '-';
+        $data['ad_slot']            = $data['ad_format'] ?? 'Custom';
+        $data['description']        = $data['description'] ?? $data['ad_title'] ?? 'Tagihan Iklan Manual';
 
         if ($request->hasFile('media')) {
-            $invoiceNumber = $data['invoice_number'];
-            $folder = "bookings/admin-{$invoiceNumber}";
-            $mediaPaths = [];
+            $folder = "bookings/admin-{$data['invoice_number']}";
+            $paths = [];
             foreach ($request->file('media') as $file) {
-                $mediaPaths[] = $file->store($folder, 'public');
+                $paths[] = $file->store($folder, 'public');
             }
-            $data['media_files'] = $mediaPaths;
+            $data['media_files'] = $paths;
         }
 
         $invoice = Invoice::create($data);
@@ -101,6 +108,7 @@ class InvoiceController extends Controller
         return redirect()->route('invoices.show', $invoice->id)
             ->with('success', 'Tagihan berhasil dibuat: ' . $invoice->invoice_number);
     }
+
 
 
     public function show(Invoice $invoice)
@@ -150,18 +158,34 @@ class InvoiceController extends Controller
             'ad_title'           => 'nullable|string|max:150',
             'ad_format'          => 'nullable|string|max:100',
             'ad_text'            => 'nullable|string|max:2000',
-            'billing_name'       => 'required|string|max:150',
+            'placement_type'     => 'nullable|in:online,offline',
+            'billing_name'       => 'nullable|string|max:150',
             'billing_npwp_nik'   => 'nullable|string|max:50',
             'billing_email'      => 'nullable|email|max:150',
             'billing_phone'      => 'nullable|string|max:30',
             'billing_address'    => 'nullable|string|max:500',
             'payment_preference' => 'nullable|in:online,manual',
+            'signature_data'     => 'nullable|string',
+            'signed_by_name'     => 'nullable|string|max:150',
             'media.*'            => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:5120',
         ]);
 
-        $data['advertiser_name']    = $data['billing_name'];
-        $data['advertiser_contact'] = $data['billing_email'] ?? $data['billing_phone'] ?? '-';
-        $data['ad_slot']            = $data['ad_format'] ?? 'Custom';
+        if ($request->filled('signature_data')) {
+            $data['signed_at'] = now();
+            $data['signed_ip'] = $request->ip();
+        } else {
+            $data['signature_data'] = null;
+            $data['signed_at']      = null;
+            $data['signed_ip']      = null;
+        }
+
+        if (!empty($data['billing_name'])) {
+            $data['advertiser_name']    = $data['billing_name'];
+            $data['advertiser_contact'] = $data['billing_email'] ?? $data['billing_phone'] ?? '-';
+        }
+        if (!empty($data['ad_format'])) {
+            $data['ad_slot'] = $data['ad_format'];
+        }
 
         if ($request->hasFile('media')) {
             $existing = $invoice->media_files ?? [];
@@ -236,9 +260,11 @@ class InvoiceController extends Controller
         return \Barryvdh\DomPDF\Facade\Pdf::loadHTML($html)
             ->setPaper('a4', 'portrait')
             ->setOption([
-                'isRemoteEnabled' => false,
+                'isRemoteEnabled'      => true,
                 'isHtml5ParserEnabled' => true,
-                'defaultFont' => 'DejaVu Sans',
+                'defaultFont'          => 'DejaVu Sans',
+                'dpi'                  => 96,
+                'chroot'               => base_path(),
             ]);
     }
 }

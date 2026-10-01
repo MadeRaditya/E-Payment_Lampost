@@ -20,6 +20,8 @@
             font-family: 'JetBrains Mono', monospace;
         }
     </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
 </head>
 <body class="bg-slate-100/70 text-slate-800 antialiased selection:bg-red-500 selection:text-white">
 

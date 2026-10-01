@@ -24,6 +24,7 @@ class BookingController extends Controller
     public function step1(Request $request)
     {
         return view('public.booking.step-1', [
+            'placementTypes'      => config('ad_booking.placement_types'),
             'categories'          => config('ad_booking.categories'),
             'formats'             => config('ad_booking.formats'),
             'draft'               => $this->getDraft(),
@@ -35,6 +36,7 @@ class BookingController extends Controller
     public function step1Store(Request $request)
     {
         $data = $request->validate([
+            'placement_type' => 'required|in:online,offline',
             'category' => 'required|string',
             'subcategory' => 'required|string',
             'ad_title' => 'required|string|max:150',
@@ -46,9 +48,15 @@ class BookingController extends Controller
             return back()->withErrors(['category' => 'Kategori tidak valid.'])->withInput();
         }
 
+        $formats = config('ad_booking.formats');
+        $fmt = $formats[$data['ad_format']] ?? null;
+        if (!$fmt || $fmt['placement'] !== $data['placement_type']) {
+            return back()->withErrors(['ad_format' => 'Format tidak sesuai dengan penempatan.'])->withInput();
+        }
+
         $draft = $this->getDraft();
 
-        if($draft) {
+        if ($draft) {
             $draft->update($data);
         } else {
             $draft = Invoice::create(array_merge($data, [
@@ -156,32 +164,42 @@ class BookingController extends Controller
         if (!$draft) return redirect()->route('booking.step1');
 
         $data = $request->validate([
-            'billing_name' => 'required|string|max:150',
-            'billing_npwp_nik' => 'required|string|max:50',
-            'billing_email' => 'required|email|max:150',
-            'billing_phone' => 'required|string|max:30',
-            'billing_address' => 'required|string|max:500',
+            'billing_name'       => 'required|string|max:150',
+            'billing_npwp_nik'   => 'required|string|max:50',
+            'billing_email'      => 'required|email|max:150',
+            'billing_phone'      => 'required|string|max:30',
+            'billing_address'    => 'required|string|max:500',
             'payment_preference' => 'required|in:online,manual',
+            'signature_data'     => 'required|string',
+            'signed_by_name'     => 'required|string|max:150',
         ]);
 
-        $data['advertiser_name'] = $data['billing_name'];
+        if (!preg_match('/^data:image\/png;base64,/', $data['signature_data'])) {
+            return back()->withErrors(['signature_data' => 'Format tanda tangan tidak valid.'])->withInput();
+        }
+
+        if (strlen($data['signature_data']) > 700000) {
+            return back()->withErrors(['signature_data' => 'Tanda tangan terlalu besar.'])->withInput();
+        }
+
+        $data['signed_at']    = now();
+        $data['signed_ip']    = $request->ip();
+        $data['status']       = 'unpaid';
+        $data['advertiser_name']    = $data['billing_name'];
         $data['advertiser_contact'] = $data['billing_email'];
-        $data['ad_slot'] = $draft->ad_format;
-        $data['description'] = $draft->ad_title;
-        $data['status'] = 'unpaid'; 
+        $data['ad_slot']            = $draft->ad_format;
+        $data['description']        = $draft->ad_title;
 
         $draft->update($data);
 
         session()->forget('booking_invoice_id');
 
         if ($data['payment_preference'] === 'online') {
-            return redirect()
-                ->route('public.pay.show', $draft->invoice_number)
+            return redirect()->route('public.pay.show', $draft->invoice_number)
                 ->with('success', 'Pesanan berhasil! Silakan lanjutkan pembayaran.');
         }
 
-        return redirect()
-            ->route('public.pay.show', $draft->invoice_number)
+        return redirect()->route('public.pay.show', $draft->invoice_number)
             ->with('success', 'Pesanan berhasil! Silakan lakukan transfer manual sesuai instruksi.');
     }
 }

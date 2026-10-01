@@ -9,7 +9,7 @@ class Invoice extends Model
 {
     use HasFactory;
 
-protected $fillable = [
+    protected $fillable = [
         'invoice_number',
         'created_by',
         'amount',
@@ -33,6 +33,11 @@ protected $fillable = [
         'ad_start_date',
         'status',
         'due_date',
+        'placement_type',
+        'signature_data',
+        'signed_at',
+        'signed_by_name',
+        'signed_ip',
     ];
 
     protected $casts = [
@@ -40,6 +45,7 @@ protected $fillable = [
         'ad_start_date' => 'date',
         'amount' => 'decimal:2',
         'media_files' => 'array',
+        'signed_at' => 'datetime',
     ];
 
     public function creator()
@@ -60,5 +66,11 @@ protected $fillable = [
         }
         $f = $formats[$formatKey];
         return (float) ($f['base_price'] + ($f['per_day'] * max(1, $durationDays)));
+    }
+
+    public function hasSignature(): bool
+    {
+        return !empty($this->signature_data)
+            && str_starts_with($this->signature_data, 'data:image');
     }
 }
