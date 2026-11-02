@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\InternalInvoiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\PublicPaymentController;
@@ -122,3 +123,7 @@ Route::prefix('receipts')->group(function () {
 Route::get('/receipt/{payment}/download', [ReceiptController::class, 'downloadByPayment'])->name('receipt.download');
 Route::get('/receipt/{payment}/preview', [ReceiptController::class, 'preview'])->name('receipt.preview');
 Route::get('/receipt/verify/{receipt_number}', [ReceiptController::class, 'downloadByReceiptNumber'])->name('receipt.verify');
+
+// Internal Invoices
+Route::get('/api/internal/Docinvoices', [InternalInvoiceController::class, 'index'])
+    ->name('api.internal.invoice.index');
