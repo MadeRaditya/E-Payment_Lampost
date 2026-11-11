@@ -6,7 +6,7 @@
     <title>Kuitansi {{ $receipt->receipt_number }}</title>
     <style>
         @page {
-            margin: 25mm 20mm 25mm 20mm;
+            margin: 22mm 18mm 22mm 18mm;
         }
 
         * {
@@ -18,249 +18,273 @@
         body {
             font-family: DejaVu Sans, Arial, sans-serif;
             font-size: 10px;
-            color: #1f2937;
-            line-height: 1.4;
+            color: #0F172A;
+            line-height: 1.5;
+            background: #FFFFFF;
+            -webkit-font-smoothing: antialiased;
         }
 
+        /* ---------- Editorial typography ---------- */
+        .font-serif {
+            font-family: DejaVu Serif, Georgia, serif;
+            letter-spacing: -0.02em;
+        }
+
+        .label {
+            font-size: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #64748B;
+        }
+
+        /* ---------- Top accent ---------- */
         .top-accent {
-            height: 6px;
-            background-color: #dc2626;
+            height: 4px;
+            background-color: #DC2626;
+            border-radius: 2px;
             margin-bottom: 20px;
         }
 
+        /* ---------- Header ---------- */
         .header {
             width: 100%;
             margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #dc2626;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #E2E8F0;
         }
-
-        .header td {
-            vertical-align: middle;
-        }
+        .header td { vertical-align: middle; }
 
         .logo-box {
             display: inline-block;
-            width: 42px;
-            height: 42px;
-            background-color: #dc2626;
-            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            background-color: #DC2626;
+            color: #FFFFFF;
             text-align: center;
-            font-size: 24px;
+            font-size: 15px;
             font-weight: bold;
-            line-height: 42px;
+            line-height: 40px;
+            border-radius: 4px;
         }
 
         .brand-name {
-            font-size: 18px;
+            font-family: DejaVu Serif, Georgia, serif;
+            font-size: 16px;
             font-weight: bold;
-            color: #111827;
-            margin-left: 10px;
+            color: #0F172A;
+            letter-spacing: -0.02em;
         }
 
         .brand-tagline {
-            font-size: 9px;
-            color: #6b7280;
-            margin-left: 10px;
+            font-size: 8px;
+            color: #64748B;
+            margin-top: 1px;
         }
 
         .company-info {
             text-align: right;
-            font-size: 9px;
-            color: #4b5563;
-            line-height: 1.5;
+            font-size: 8px;
+            color: #64748B;
+            line-height: 1.55;
         }
 
+        /* ---------- Doc title ---------- */
         .doc-title {
             text-align: center;
-            margin: 25px 0 8px 0;
+            margin: 24px 0 6px 0;
         }
 
         .doc-title h1 {
-            font-size: 22px;
+            font-family: DejaVu Serif, Georgia, serif;
+            font-size: 20px;
             font-weight: bold;
-            letter-spacing: 4px;
-            color: #111827;
+            letter-spacing: 3px;
+            color: #0F172A;
             text-transform: uppercase;
         }
 
         .doc-subtitle {
             text-align: center;
-            font-size: 10px;
-            color: #6b7280;
-            margin-bottom: 20px;
+            font-size: 9px;
+            color: #64748B;
+            margin-bottom: 18px;
+            font-family: DejaVu Sans Mono, monospace;
+            letter-spacing: 0.5px;
         }
 
+        /* ---------- Status badge ---------- */
         .badge-wrapper {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 22px;
         }
 
         .badge {
             display: inline-block;
-            padding: 6px 40px;
-            background-color: #dcfce7;
-            border: 2px solid #16a34a;
-            color: #15803d;
-            font-size: 13px;
+            padding: 5px 32px;
+            background-color: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            color: #047857;
+            font-size: 11px;
             font-weight: bold;
             letter-spacing: 4px;
+            border-radius: 20px;
         }
 
+        /* ---------- Section titles ---------- */
         .section-title {
-            font-size: 10px;
+            font-size: 8px;
             font-weight: bold;
-            color: #dc2626;
+            color: #DC2626;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            padding: 4px 0 4px 10px;
-            border-left: 3px solid #dc2626;
+            padding: 5px 0 5px 10px;
+            border-left: 2px solid #DC2626;
+            background-color: #FEF2F2;
             margin-bottom: 8px;
-            background-color: #fef2f2;
         }
 
+        /* ---------- Info table ---------- */
         .info-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
-
         .info-table td {
             padding: 7px 0;
-            font-size: 10px;
+            font-size: 9.5px;
             vertical-align: top;
-            border-bottom: 1px dotted #e5e7eb;
+            border-bottom: 1px solid #F1F5F9;
         }
-
         .info-table td.label {
-            color: #6b7280;
+            color: #64748B;
             width: 38%;
+            font-weight: normal;
+            text-transform: none;
+            letter-spacing: 0;
+            font-size: 9.5px;
         }
-
         .info-table td.value {
-            color: #111827;
+            color: #0F172A;
             font-weight: bold;
             text-align: right;
         }
 
-        .two-col {
+        /* ---------- Amount box ---------- */
+        .amount-box {
             width: 100%;
-            margin-bottom: 15px;
+            background-color: #DC2626;
+            margin: 14px 0 18px 0;
+            border-radius: 4px;
+        }
+        .amount-box td {
+            padding: 16px 22px;
+            color: #FFFFFF;
+            vertical-align: middle;
+        }
+        .amount-box .label {
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.9;
+            color: #FFFFFF;
+            font-weight: bold;
+        }
+        .amount-box .value {
+            font-family: DejaVu Serif, Georgia, serif;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: right;
+            letter-spacing: -0.02em;
         }
 
-        .two-col>tbody>tr>td {
+        /* ---------- Two-column info ---------- */
+        .two-col {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 6px 0;
+            margin-bottom: 14px;
+        }
+        .two-col > tbody > tr > td {
             width: 50%;
             vertical-align: top;
             padding: 0;
         }
 
-        .two-col td.col-left {
-            padding-right: 8px;
-        }
-
-        .two-col td.col-right {
-            padding-left: 8px;
-        }
-
-        .amount-box {
-            width: 100%;
-            background-color: #dc2626;
-            margin: 15px 0 20px 0;
-        }
-
-        .amount-box td {
-            padding: 18px 24px;
-            color: #ffffff;
-            vertical-align: middle;
-        }
-
-        .amount-box .label {
-            font-size: 10px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            opacity: 0.9;
-        }
-
-        .amount-box .value {
-            font-size: 24px;
-            font-weight: bold;
-            text-align: right;
-            letter-spacing: 1px;
-        }
-
+        /* ---------- Ad detail table ---------- */
         .ad-table {
             width: 100%;
             border-collapse: collapse;
         }
-
         .ad-table td {
             padding: 6px 0;
-            font-size: 10px;
+            font-size: 9.5px;
             vertical-align: top;
-            border-bottom: 1px dotted #e5e7eb;
+            border-bottom: 1px solid #F1F5F9;
         }
-
         .ad-table td:first-child {
-            color: #6b7280;
+            color: #64748B;
             width: 40%;
         }
-
         .ad-table td:last-child {
-            color: #111827;
+            color: #0F172A;
             font-weight: bold;
         }
 
+        /* ---------- Note ---------- */
         .note {
-            background-color: #fffbeb;
-            border-left: 3px solid #f59e0b;
+            background-color: #FFFBEB;
+            border-left: 2px solid #F59E0B;
+            border-radius: 0 4px 4px 0;
             padding: 8px 12px;
-            font-size: 9px;
-            color: #92400e;
-            margin: 15px 0;
+            font-size: 8.5px;
+            color: #92400E;
+            margin: 16px 0;
+            line-height: 1.55;
         }
+        .note strong { color: #78350F; }
 
+        /* ---------- Signatures ---------- */
         .signature-table {
             width: 100%;
-            margin-top: 25px;
+            margin-top: 22px;
             page-break-inside: avoid;
+            padding-top: 12px;
+            border-top: 1px solid #E2E8F0;
         }
-
         .signature-table td {
             width: 50%;
             text-align: center;
             vertical-align: top;
-            padding: 0 20px;
+            padding: 0 16px;
         }
-
         .signature-space {
             height: 55px;
         }
-
         .signature-line {
-            border-top: 1px solid #374151;
+            border-top: 1px solid #CBD5E1;
             padding-top: 5px;
-            font-size: 10px;
-            color: #4b5563;
+            font-size: 9px;
+            color: #64748B;
         }
-
         .signature-name {
             font-weight: bold;
-            color: #111827;
-            font-size: 10px;
+            color: #0F172A;
+            font-size: 9.5px;
         }
 
+        /* ---------- Footer ---------- */
         .footer {
-            margin-top: 25px;
+            margin-top: 22px;
             padding-top: 10px;
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid #E2E8F0;
             text-align: center;
-            font-size: 8px;
-            color: #9ca3af;
+            font-size: 7.5px;
+            color: #94A3B8;
             line-height: 1.6;
         }
-
         .footer .verify-url {
-            color: #dc2626;
+            color: #DC2626;
             font-weight: bold;
         }
     </style>
@@ -270,12 +294,13 @@
 
     <div class="top-accent"></div>
 
+    <!-- Header -->
     <table class="header">
         <tr>
             <td style="width: 60%;">
                 <table>
                     <tr>
-                        <td style="width: 50px;">
+                        <td style="width: 48px;">
                             <div class="logo-box">LP</div>
                         </td>
                         <td>
@@ -294,6 +319,7 @@
         </tr>
     </table>
 
+    <!-- Document Title -->
     <div class="doc-title">
         <h1>Kuitansi Pembayaran</h1>
     </div>
@@ -303,6 +329,7 @@
         <div class="badge">LUNAS</div>
     </div>
 
+    <!-- Payment Info -->
     <div class="section-title">Informasi Pembayaran</div>
     <table class="info-table">
         <tr>
@@ -328,6 +355,7 @@
         </tr>
     </table>
 
+    <!-- Amount Box -->
     <table class="amount-box">
         <tr>
             <td style="width: 50%;">
@@ -339,9 +367,10 @@
         </tr>
     </table>
 
+    <!-- Two-column: Sender / Ad -->
     <table class="two-col">
         <tr>
-            <td class="col-left">
+            <td>
                 <div class="section-title">Telah Diterima Dari</div>
                 <table class="ad-table">
                     <tr>
@@ -354,7 +383,7 @@
                     </tr>
                 </table>
             </td>
-            <td class="col-right">
+            <td>
                 <div class="section-title">Detail Iklan</div>
                 <table class="ad-table">
                     <tr>
@@ -370,6 +399,7 @@
         </tr>
     </table>
 
+    <!-- Description -->
     <div class="section-title">Deskripsi</div>
     <table class="ad-table">
         <tr>
@@ -382,12 +412,13 @@
         </tr>
     </table>
 
+    <!-- Note -->
     <div class="note">
         <strong>Catatan:</strong> Kuitansi ini sah dan diterbitkan secara digital tanpa memerlukan tanda tangan basah.
         Verifikasi keaslian dokumen dapat dilakukan melalui tautan di bagian bawah.
     </div>
 
-    <!-- Digital Signature Block -->
+    <!-- Signatures -->
     <table class="signature-table">
         <tr>
             <td>
@@ -399,15 +430,16 @@
             </td>
 
             <td>
-                <div class="signature-space" style="height: 60px;">
+                <div class="signature-space">
                     @if ($invoice->hasSignature())
                         <img src="{{ $invoice->signature_data }}" alt="Signature"
-                            style="max-height: 55px; max-width: 180px; display: block; margin: 3px auto;">
+                             style="max-height: 55px; max-width: 180px; display: block; margin: 3px auto;">
                     @endif
                 </div>
                 <div class="signature-line">
                     <div class="signature-name">
-                        {{ $invoice->signed_by_name ?? ($invoice->advertiser_name ?? 'Pengiklan') }}</div>
+                        {{ $invoice->signed_by_name ?? ($invoice->advertiser_name ?? 'Pengiklan') }}
+                    </div>
                     <div>Penerima</div>
                 </div>
             </td>
