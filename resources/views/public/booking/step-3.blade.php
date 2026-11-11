@@ -1,91 +1,147 @@
 @extends('public.booking.layout', ['currentStep' => 3])
 
-@section('title', 'Step 3 — Unggah Media')
+@section('title', 'Unggah Aset — Pemesanan Iklan')
 
 @section('content')
-<form action="{{ route('booking.step3.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6" id="form-media">
-    @csrf
+    <div class="mb-10 hidden lg:block">
+        <h1 class="text-4xl font-editorial text-[var(--color-text-main)] mb-3">Aset Visual & Dokumen</h1>
+        <p class="text-[var(--color-text-muted)] text-sm">Lampirkan foto properti, banner promosi, atau dokumen pendukung
+            (Opsional).</p>
+    </div>
 
-    <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
-        <h2 class="text-xl font-black text-slate-900 mb-1">Unggah Media / Foto Iklan</h2>
-        <p class="text-xs text-slate-500 mb-6">
-            <strong>Opsional.</strong> Tambahkan foto, banner, atau dokumen pendukung untuk iklan Anda. Maksimal 5MB per file (JPG, PNG, WEBP, PDF).
-        </p>
+    <form action="{{ route('booking.step3.store') }}" method="POST" enctype="multipart/form-data" id="form-step3"
+        class="max-w-3xl space-y-10">
+        @csrf
 
-        <label for="file-input" class="block cursor-pointer">
-            <div class="border-2 border-dashed border-slate-300 hover:border-red-500 rounded-3xl p-10 text-center transition bg-slate-50/50 hover:bg-red-50/30">
-                <div class="w-14 h-14 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+        <section class="hairline-card p-8">
+            {{-- UPLOAD AREA --}}
+            <label for="file-input" class="block cursor-pointer group">
+                <div
+                    class="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-2xl p-12 text-center transition-all group-hover:border-[var(--color-brand)] group-hover:bg-[var(--color-brand-light)]">
+
+                    <div
+                        class="w-16 h-16 rounded-2xl bg-white shadow-sm border border-[var(--color-border)] text-[var(--color-text-main)] flex items-center justify-center mx-auto mb-6 transition-transform group-hover:scale-110 group-hover:text-[var(--color-brand)] group-hover:border-[var(--color-brand-muted)]">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                    </div>
+
+                    <h3 class="text-base font-bold text-[var(--color-text-main)] mb-2">Pilih File atau Tarik ke Sini</h3>
+                    <p class="text-xs text-[var(--color-text-muted)] max-w-sm mx-auto leading-relaxed">Mendukung format JPG,
+                        PNG, WEBP, atau PDF. Maksimal 5MB per file. Anda dapat memilih beberapa file sekaligus.</p>
                 </div>
-                <p class="font-bold text-sm text-slate-900">Klik untuk memilih file</p>
-                <p class="text-xs text-slate-500 mt-1">atau drag & drop file ke area ini</p>
-                <p class="text-[11px] text-slate-400 mt-3">Bisa pilih banyak file sekaligus</p>
-            </div>
-        </label>
-        <input type="file" name="media[]" id="file-input" multiple accept="image/*,application/pdf" class="hidden">
+            </label>
+            <input type="file" name="media[]" id="file-input" multiple
+                accept="image/jpeg,image/png,image/webp,application/pdf" class="hidden">
 
-        @error('media.*')<p class="text-rose-500 text-xs mt-2">{{ $message }}</p>@enderror
-
-        <div id="preview-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6"></div>
-
-        @if(!empty($draft->media_files))
-            <div class="mt-8 pt-6 border-t border-slate-200">
-                <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">File yang Sudah Diunggah Sebelumnya</p>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                    @foreach($draft->media_files as $path)
-                        <div class="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 aspect-square">
-                            @if(Str::endsWith($path, ['.jpg','.jpeg','.png','.webp']))
-                                <img src="{{ Storage::url($path) }}" class="w-full h-full object-cover" alt="media">
-                            @else
-                                <div class="w-full h-full flex items-center justify-center text-slate-400 text-xs font-bold">PDF FILE</div>
-                            @endif
-                        </div>
-                    @endforeach
+            @error('media.*')
+                <div
+                    class="mt-4 p-3 bg-red-50 text-red-700 text-xs font-medium rounded-lg border border-red-100 flex items-center gap-2">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {{ $message }}
                 </div>
-            </div>
-        @endif
+            @enderror
 
-        <div class="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-2xl text-xs text-amber-800">
-            <strong>Ingin melewati step ini?</strong> Cukup klik "Lanjut ke Step 4" tanpa memilih file. Iklan Anda tetap dapat diproses tanpa media tambahan.
+            {{-- NEW FILES PREVIEW --}}
+            <div id="preview-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 empty:hidden"></div>
+
+            {{-- EXISTING FILES PREVIEW --}}
+            @if (!empty($draft->media_files))
+                <div class="mt-8 pt-6 border-t border-[var(--color-border)]">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xs font-bold text-[var(--color-text-main)] uppercase tracking-widest">Aset Tersimpan
+                        </h4>
+                        <span class="text-xs font-medium text-[var(--color-text-muted)]">{{ count($draft->media_files) }}
+                            File</span>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        @foreach ($draft->media_files as $path)
+                            <div
+                                class="relative rounded-xl overflow-hidden border border-[var(--color-border)] bg-[var(--color-bg)] aspect-square group">
+                                @if (Str::endsWith($path, ['.jpg', '.jpeg', '.png', '.webp']))
+                                    <img src="{{ Storage::url($path) }}" class="w-full h-full object-cover" alt="media">
+                                @else
+                                    <div
+                                        class="w-full h-full flex flex-col items-center justify-center text-[var(--color-text-muted)] gap-2">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                                d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                        </svg>
+                                        <span class="text-[10px] font-bold tracking-widest">PDF</span>
+                                    </div>
+                                @endif
+                                <div
+                                    class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                                    <span
+                                        class="text-[10px] text-white font-medium px-2 text-center break-all line-clamp-2">{{ basename($path) }}</span>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+        </section>
+
+        <div class="flex items-center justify-between">
+            <a href="{{ route('booking.step2') }}"
+                class="text-sm font-semibold text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] transition-colors">←
+                Kembali</a>
+            <button type="submit"
+                class="bg-[var(--color-text-main)] hover:bg-black text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition-all focus:ring-4 focus:ring-slate-300 active:scale-95 flex items-center gap-3">
+                <span>Lanjutkan ke Tahap 4</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </button>
         </div>
-    </div>
+    </form>
 
-    <div class="flex justify-between">
-        <a href="{{ route('booking.step2') }}" class="px-6 py-3.5 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold text-sm">← Kembali</a>
-        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg shadow-red-600/30 transition inline-flex items-center gap-2">
-            Lanjut ke Step 4
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-        </button>
-    </div>
-</form>
+    @push('scripts')
+        <script>
+            const fileInput = document.getElementById('file-input');
+            const previewGrid = document.getElementById('preview-grid');
 
-<script>
-    const fileInput = document.getElementById('file-input');
-    const previewGrid = document.getElementById('preview-grid');
+            fileInput.addEventListener('change', (e) => {
+                previewGrid.innerHTML = '';
+                const files = Array.from(e.target.files).slice(0, 12);
 
-    fileInput.addEventListener('change', (e) => {
-        previewGrid.innerHTML = '';
-        const files = Array.from(e.target.files).slice(0, 12); 
-        files.forEach((file) => {
-            const card = document.createElement('div');
-            card.className = 'relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 aspect-square';
+                if (files.length > 0) {
+                    previewGrid.classList.remove('hidden');
+                } else {
+                    previewGrid.classList.add('hidden');
+                }
 
-            if (file.type.startsWith('image/')) {
-                const img = document.createElement('img');
-                img.src = URL.createObjectURL(file);
-                img.className = 'w-full h-full object-cover';
-                card.appendChild(img);
-            } else {
-                card.innerHTML = '<div class="w-full h-full flex items-center justify-center text-slate-400 text-xs font-bold">PDF FILE</div>';
-            }
+                files.forEach((file) => {
+                    const card = document.createElement('div');
+                    card.className =
+                        'relative rounded-xl overflow-hidden border border-[var(--color-border)] bg-[var(--color-bg)] aspect-square group';
 
-            const overlay = document.createElement('div');
-            overlay.className = 'absolute bottom-0 left-0 right-0 bg-black/60 text-white text-[10px] p-1.5 truncate';
-            overlay.textContent = file.name;
-            card.appendChild(overlay);
+                    if (file.type.startsWith('image/')) {
+                        const img = document.createElement('img');
+                        img.src = URL.createObjectURL(file);
+                        img.className = 'w-full h-full object-cover';
+                        card.appendChild(img);
+                    } else {
+                        card.innerHTML = `
+                    <div class="w-full h-full flex flex-col items-center justify-center text-[var(--color-text-muted)] gap-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                        <span class="text-[10px] font-bold tracking-widest">PDF</span>
+                    </div>`;
+                    }
 
-            previewGrid.appendChild(card);
-        });
-    });
-</script>
+                    const overlay = document.createElement('div');
+                    overlay.className =
+                        'absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[10px] p-2 truncate backdrop-blur-md';
+                    overlay.textContent = file.name;
+                    card.appendChild(overlay);
+
+                    previewGrid.appendChild(card);
+                });
+            });
+        </script>
+    @endpush
 @endsection

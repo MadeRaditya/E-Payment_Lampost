@@ -11,6 +11,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
+
+        Invoice::where('status', 'unpaid')
+            ->where('due_date', '<', now())
+            ->update(['status' => 'expired']);
+
         $totalRevenue = Payment::where('status', 'success')->sum('amount');
         $paidCount = Invoice::where('status', 'paid')->count();
         $unpaidCount = Invoice::where('status', 'unpaid')->count();

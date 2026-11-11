@@ -43,6 +43,8 @@ class BookingController extends Controller
             'ad_format' => 'required|string',
         ]);
 
+        $data['ad_slot'] = $data['ad_format'];
+
         $cats = config('ad_booking.categories');
         if (!isset($cats[$data['category']]) || !in_array($data['subcategory'], $cats[$data['category']])) {
             return back()->withErrors(['category' => 'Kategori tidak valid.'])->withInput();
