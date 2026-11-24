@@ -19,7 +19,7 @@ Sistem informasi pemesanan slot iklan mandiri (*self-service ad booking*) dan pe
 - [Arsitektur Alur Pemesanan](#arsitektur-alur-pemesanan)
 - [Instalasi & Konfigurasi Lokal](#instalasi--konfigurasi-lokal)
 - [Konfigurasi Otomatisasi (Cron Job)](#konfigurasi-automatisasi-cron-job)
-- [Lisensi](#lisensi)
+- [Lisensi](#lisensi--kredit)
 
 ---
 
@@ -181,6 +181,6 @@ cd /path-ke-direktori-project && php artisan schedule:run >> /dev/null 2>&1
 
 ## Lisensi & Kredit
 
-Dirancang dan dikembangkan oleh **[Made Raditya](https://github.com/MadeRaditya)** untuk **PT Masa Kini Mandiri / Harian Umum Lampung Post**.
+Dirancang dan dikembangkan oleh **[Made Raditya](https://github.com/MadeRaditya)** untuk **PT Masa Kini Mandiri / Lampung Post**.
 
 Hak Cipta &copy; 2026 PT Masa Kini Mandiri. Seluruh hak cipta dilindungi undang-undang. Kode sumber ini hanya ditujukan untuk operasional internal perusahaan dan tidak untuk didistribusikan ulang tanpa izin tertulis.
